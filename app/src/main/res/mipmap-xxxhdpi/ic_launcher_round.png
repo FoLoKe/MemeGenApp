@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="debug" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
+  <component name="AvailableLibraryUpdateStorage">
+    <library-updates>
+      <library-update>
+        <group-id>androidx.constraintlayout</group-id>
+        <name>constraintlayout</name>
+        <version>2.0.0-beta2</version>
+        <repository>Google</repository>
+      </library-update>
+    </library-updates>
+    <last-search-timestamp>1566625150216</last-search-timestamp>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a440aa7a-8023-46cd-8363-9e80004382c8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/GameRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/GameRenderer.java" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view />
+      </state>
+    </system>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/GameRenderer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="335">
+              <caret line="261" column="31" lean-forward="true" selection-start-line="261" selection-start-column="31" selection-end-line="261" selection-end-column="31" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/TextureUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="435">
+              <caret line="40" column="8" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="40" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="GLSL Shader" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>.,\S</find>
+      <find>getChild</find>
+      <find>GLES20.</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>,</replace>
+      <replace>., \S</replace>
+      <replace>., .</replace>
+      <replace>.,\s</replace>
+      <replace />
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="GLES_migration" />
+      </map>
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/EntityManager.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/objects/Projectile.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/GamePanel.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/objects/StaticEntity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/GLGameSurface.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/Model.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/LineModel.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/raw/fragment_shader.glsl" />
+        <option value="$PROJECT_DIR$/app/src/main/res/raw/vertex_shader.glsl" />
+        <option value="$PROJECT_DIR$/app/src/main/res/raw/textured_vertex_shader.glsl" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/Animation.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/raw/textured_fragment_shader.glsl" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/RectModel.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/Widget.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/controllers/Controller.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/models/Model.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/objects/Door.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/models/LineModel.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/LevelManager.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/models/CircleModel.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/ui_components/Joystick.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/TextureUtils.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/raw/shadow_map_fragment_shader.glsl" />
+        <option value="$PROJECT_DIR$/app/src/main/res/raw/s.glsl" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/ShaderUtils.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/raw/s_f.glsl" />
+        <option value="$PROJECT_DIR$/app/src/main/res/raw/s_v.glsl" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/widgets/ShadowShader.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/Shader.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/ColoredShader.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/TexturedShader.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/ShadowShader.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/shaders/TexturedShader.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/shaders/ColoredShader.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/controllers/AI.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/shaders/Shader.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/widgets/Widget.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/widgets/WProgLine.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/ui_components/Joystick.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/models/RectModel.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/Text.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/SpriteSheet.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/inventory/Inventory.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/inventory/ItemsSheet.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/utilities/inventory/Item.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/GameManager.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/objects/Entity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/objects/DynamicEntity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/game/UIManager.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/foloke/hazard_perimeter/GameRenderer.java" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-184" />
+    <option name="y" value="-15" />
+    <option name="width" value="1248" />
+    <option name="height" value="746" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
+      <pane id="AndroidView">
+        <subPane>
+          <expand>
+            <path>
+              <item name="HazardPerimeter2" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+            </path>
+            <path>
+              <item name="HazardPerimeter2" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="HazardPerimeter2" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="hazard_perimeter" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="HazardPerimeter2" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="hazard_perimeter" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="HazardPerimeter2" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="hazard_perimeter" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+              <item name="utilities" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="android.sdk.path" value="$ANDROID_SDK_HOME$" />
+    <property name="device.picker.selection" value="K6T6R17711002011" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../HazPer_GLES_PROTO" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.pathVariables" />
+  </component>
+  <component name="PsdUISettings">
+    <option name="MODULE_TAB" value="Default Config" />
+    <option name="LAST_EDITED_BUILD_TYPE" value="release" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.foloke.hazard_perimeter" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" 
