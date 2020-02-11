@@ -121,7 +121,7 @@ public class MGActivity extends Activity {
         @Override
         protected Content doInBackground(Void... params) {
             try {
-                final String url = "http://31.42.45.42:10204/greeting?name=SUKA";
+                final String url = "http://31.42.45.42:10204/get?name=SUKA";
                 MyRestTemplate restTemplate = new MyRestTemplate(1000);
 				
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
