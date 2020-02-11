@@ -7,10 +7,11 @@
 	android:id="@+id/contentLinearLayout">
 
 	<TextView
+		android:id="@+id/contentNickname"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/contentNickname"
-		android:text="debug nickname"/>
+		android:fontFamily="casual"
+		android:text="debug nickname" />
 
 	<FrameLayout
 		android:layout_height="wrap_content"
@@ -35,17 +36,20 @@
 			android:layout_height="wrap_content"
 			android:orientation="horizontal">
 
-			<ImageButton
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:id="@+id/contentUpButton"/>
+			<Button
+				android:id="@+id/contentUpButton"
+				android:layout_width="40dp"
+				android:layout_height="40dp" />
 
 			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
 				android:id="@+id/contentUpRating"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:fontFamily="casual"
+				android:paddingLeft="10dp"
 				android:text="0"
-				android:textColor="#00ff00"/>
+				android:textColor="#00ff00"
+				android:textSize="24sp" />
 
 		</LinearLayout>
 
@@ -56,20 +60,20 @@
 			android:gravity="right">
 
 			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
 				android:id="@+id/contentDownRating"
-				android:text="0"
-				android:textColor="#ff0000"/>
-
-			<ImageButton
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:fontFamily="casual"
+				android:paddingRight="10dp"
+				android:text="0"
+				android:textColor="#ff0000"
+				android:textSize="24sp" />
+
+			<Button
 				android:id="@+id/contentDownButton"
-				android:maxHeight="20dp"
-				android:maxWidth="20dp"
-				android:adjustViewBounds="false"
-				android:background="@drawable/no_image"/>
+				android:layout_width="40dp"
+				android:layout_height="40dp"
+				android:adjustViewBounds="false" />
 
 		</LinearLayout>
 
