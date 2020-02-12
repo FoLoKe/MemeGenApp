@@ -33,11 +33,18 @@ public final class R {
         public static final int contentUpButton=0x7f080003;
         public static final int contentUpRating=0x7f080004;
         public static final int mainScrollView=0x7f080007;
+        public static final int mainViewFlipper=0x7f080009;
+        public static final int menuEditorButton=0x7f08000b;
+        public static final int menuLentButton=0x7f08000a;
+        public static final int menuUploadButton=0x7f08000c;
     }
     public static final class layout {
         public static final int content=0x7f040000;
-        public static final int main=0x7f040001;
-        public static final int menu=0x7f040002;
+        public static final int editor=0x7f040001;
+        public static final int lent=0x7f040002;
+        public static final int main=0x7f040003;
+        public static final int menu=0x7f040004;
+        public static final int upload=0x7f040005;
     }
     public static final class mipmap {
         public static final int ic_launcher=0x7f030000;

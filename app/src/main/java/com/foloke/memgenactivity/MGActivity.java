@@ -27,19 +27,7 @@ public class MGActivity extends Activity {
 
 		final ScrollView scroll = findViewById(R.id.mainScrollView);
 		
-		scroll.setOnTouchListener( new OnTouchListener(){
-			public boolean onTouch(View v, MotionEvent m){
-				switch(m.getAction()) {
-					case MotionEvent.ACTION_UP:
-						v.setBackgroundColor(Color.RED);
-						ScrollView sv = (ScrollView)v;
-						if(sv.getScrollY() ==sv.getHeight()) {
-							sv.setBackgroundColor(Color.BLACK);
-						}
-				}
-				return false;
-			}
-		});
+		
 		
 		scroll.setOnScrollChangeListener(new OnScrollChangeListener() {
 			@Override
@@ -72,8 +60,41 @@ public class MGActivity extends Activity {
 			}
 		});
 		
+		final ViewFlipper viewFlipper = findViewById(R.id.mainViewFlipper);
+		
+		Button menuLentButton = (Button)findViewById(R.id.menuLentButton);
+		
+		menuLentButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				viewFlipper.setDisplayedChild(1);
+				v.setBackgroundColor(Color.BLACK);
+				
+			}
+		});
+		
+		Button menuEditorButton = (Button)findViewById(R.id.menuEditorButton);
+
+		menuEditorButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+				public void onClick(View v) {
+					viewFlipper.setDisplayedChild(2);
+					
+				}
+				
+			});
+			
+		Button menuUploadButton = findViewById(R.id.menuUploadButton);
+
+		menuUploadButton.setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+					viewFlipper.setDisplayedChild(3);
+				}
+			});
 		
 		getRequest(this, list);
+		
+		
 
     }
 

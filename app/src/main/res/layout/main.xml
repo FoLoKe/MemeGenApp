@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:orientation="vertical">
 		
+	<ViewFlipper
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:id="@+id/mainViewFlipper">
+	
+		<include layout = "@layout/lent"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"/>
+		
+		<include layout = "@layout/editor"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"/>
+		
+		<include layout = "@layout/upload"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"/>
+	</ViewFlipper>
 	<include 
 		layout="@layout/menu"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"/>
-	
-	<ScrollView 
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:id="@+id/mainScrollView"
-		android:orientation="vertical">
-			
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:id="@+id/content"
-			android:orientation="vertical">
-		</LinearLayout>
-	</ScrollView>
-</LinearLayout>
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom"/>
+</FrameLayout>
