@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.0"
     defaultConfig {
         applicationId "com.foloke.memgenactivity"
-        minSdkVersion 23
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -34,8 +34,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'org.springframework.android:spring-android-rest-template:2.0.0.M3'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.2'
-    
+    implementation 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
 
 }

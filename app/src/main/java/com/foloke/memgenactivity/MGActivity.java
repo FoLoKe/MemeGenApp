@@ -20,19 +20,12 @@ public class MGActivity extends Activity {
         setContentView(R.layout.main);
 		
 		final LinearLayout list = findViewById(R.id.content);
+		final Activity context = this;
 		
-		for(int i=0; i<1; i++) {
-		
-			View contentBox = LayoutInflater.from(this).inflate(R.layout.content, null);
-			ImageView content = contentBox.findViewById(R.id.contentImage);
-			Bitmap b = BitmapFactory.decodeResource( getResources(),R.drawable.no_image);
-			content.setImageBitmap(b);
-			
-			list.addView(contentBox);
-			
-		}
+		View content = LayoutInflater.from(this).inflate(R.layout.content, null);
+		list.addView(content);
 
-		ScrollView scroll = findViewById(R.id.mainScrollView);
+		final ScrollView scroll = findViewById(R.id.mainScrollView);
 		
 		scroll.setOnTouchListener( new OnTouchListener(){
 			public boolean onTouch(View v, MotionEvent m){
@@ -51,16 +44,18 @@ public class MGActivity extends Activity {
 		scroll.setOnScrollChangeListener(new OnScrollChangeListener() {
 			@Override
 			public void onScrollChange(View v, int x, int y, int ox, int oy) {
-				float diff = oy - y;
-				if(diff == 0) { 
-					//v.setBackgroundColor(Color.BLACK);
-				} else {
-					//v.setBackgroundColor(Color.WHITE);
+				View view = scroll.getChildAt(scroll.getChildCount() - 1);
+				int diff = (view.getBottom() - (scroll.getHeight() + scroll.getScrollY()));
+
+				// if diff is zero, then the bottom has been reached
+				if (diff == 0) {
+					// do stuff
+					getRequest(context, list);
 				}
 			}
 		});
 		
-		final Activity context = this;
+		
 		scroll.setOnTouchListener(new OnTouchListener(){
 			public boolean onTouch(View v, MotionEvent event){
 				switch(event.getAction()) {
@@ -70,15 +65,15 @@ public class MGActivity extends Activity {
 					case MotionEvent.ACTION_UP:
 						
 						
-						TextView textView = new TextView(context);
-						textView.setText("updating");
-						new RequestTask(list).execute();
-						list.addView(textView);
+						
 						break;
 				}
 				return false;
 			}
 		});
+		
+		
+		getRequest(this, list);
 
     }
 
@@ -92,6 +87,12 @@ public class MGActivity extends Activity {
 	public static View createContent(Context context) {
 		return LayoutInflater.from(context).inflate(R.layout.content, null);
 	} 
+	
+	public static void getRequest(Context context, LinearLayout container) {
+		Toast.makeText(context,"updating",Toast.LENGTH_SHORT).show();
+
+		new RequestTask().execute(container);
+	}
 
 
 }
