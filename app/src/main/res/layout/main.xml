@@ -2,12 +2,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:orientation="vertical">
+		android:orientation="vertical"
+		android:id="@+id/mainFrameLayout">
 		
 	<ViewFlipper
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:id="@+id/mainViewFlipper">
+		android:id="@+id/mainViewFlipper"
+		>
 	
 		<include layout = "@layout/lent"
 			android:layout_width="match_parent"
@@ -15,15 +17,19 @@
 		
 		<include layout = "@layout/editor"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"/>
+			android:layout_height="match_parent"
+			android:id="@+id/mainEditorInclude"/>
 		
 		<include layout = "@layout/upload"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"/>
+			android:layout_height="match_parent"
+			android:id="@+id/mainUploadInclude"/>
 	</ViewFlipper>
 	<include 
 		layout="@layout/menu"
+		android:id="@+id/mainMenu"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_gravity="bottom"/>
+		android:layout_gravity="bottom"
+		/>
 </FrameLayout>
