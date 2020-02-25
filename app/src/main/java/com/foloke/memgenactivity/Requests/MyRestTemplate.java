@@ -1,4 +1,4 @@
-package com.foloke.memgenactivity;
+package com.foloke.memgenactivity.Requests;
 
 import android.util.Log;
 

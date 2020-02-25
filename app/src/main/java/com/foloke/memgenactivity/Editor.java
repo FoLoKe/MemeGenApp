@@ -6,6 +6,8 @@ import android.util.*;
 import android.graphics.*;
 import android.view.ScaleGestureDetector.*;
 import java.util.*;
+import java.io.*;
+import android.os.*;
 
 public class Editor extends SurfaceView implements SurfaceHolder.Callback
 {
@@ -17,8 +19,12 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
 	
 	boolean gestureInProgress = false;
 	
+	Context context;
+	
 	public Editor(Context context, AttributeSet attributeSet) {
 		super(context, attributeSet);
+		this.context = context;
+		
 		camera = new Camera();
 		canvasRegion = new RectF(0, 0, 320, 320);
 		canvasColor = new Paint();
@@ -30,8 +36,6 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
         setFocusable(false);
 		
 		thread.start();
-		
-		
 	}
 	
 	public Layer newLayer() {
@@ -45,18 +49,21 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
 	public void surfaceCreated(SurfaceHolder p1)
 	{
 		// TODO: Implement this method
+		
 	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder p1)
 	{
 		// TODO: Implement this method
+		
 	}
 
 	@Override
 	public void surfaceChanged(SurfaceHolder p1, int p2, int p3, int p4)
 	{
 		// TODO: Implement this method
+		
 	}
 
 	
@@ -80,7 +87,6 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
 		//super.draw(canvas);
 	}
 	
-	
 	private class Camera {
 		public float x, y;
 		public float zoom;
@@ -88,7 +94,7 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
 		public Camera() {
 			x = 0;
 			y = 0;
-			zoom =  1;
+			zoom = 1;
 		}
 	}
 	
@@ -128,10 +134,13 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
 				} catch (Exception e) {
 					 System.out.println(e);
 				} finally {
-					if(canvas!=null)
-						try{
+					if(canvas!=null) {
+						try {
 							surfaceHolder.unlockCanvasAndPost(canvas);
-						}catch(Exception e){e.printStackTrace();}
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+					}
 				}
 				
 				timeMillis=(System.nanoTime()-startTime)/1000000;
@@ -164,9 +173,14 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
 		@Override
 		public boolean onScale(ScaleGestureDetector detector)
 		{
-			camera.zoom *= detector.getScaleFactor();
-			// Don't let the object get too small or too large.
-			camera.zoom = Math.max(0.5f, Math.min(camera.zoom, 4.0f));
+			if(selectedLayer  == null) {
+				camera.zoom *= detector.getScaleFactor();
+				// Don't let the object get too small or too large.
+				camera.zoom = Math.max(0.5f, Math.min(camera.zoom, 4.0f));
+			} else {
+				selectedLayer.scale *= detector.getScaleFactor();
+				selectedLayer.scale = Math.max(0.2f, Math.min(selectedLayer.scale, 10.0f));
+			}
 			
 			return true;
 		}
@@ -180,6 +194,29 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
 
 
 	};
+	
+	public Bitmap toBitmap(Canvas canvas)
+	{
+		Bitmap toDisk = null;
+		try {
+			
+			toDisk = Bitmap.createBitmap((int)canvasRegion.width(),(int)canvasRegion.height(),Bitmap.Config.ARGB_8888);
+			canvas.setBitmap(toDisk);
+			canvas.drawRect(canvasRegion, canvasColor);
+
+			Iterator<Layer> iterator = layers.iterator();
+			while(iterator.hasNext()) {
+				Layer layer = iterator.next();
+				layer.render(canvas);
+			}
+			File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+			toDisk.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(new File(dir, "meme.jpg")));
+			canvas.setBitmap(null);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return toDisk;
+	}
 
     private ScaleGestureDetector gestureDetector = new ScaleGestureDetector(getContext(), gestureListener);
 	
@@ -203,8 +240,8 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
 							camera.x += event.getX() - pressPoint.x;
 							camera.y += event.getY() - pressPoint.y;
 						} else {
-							selectedLayer.x += (event.getX() - pressPoint.x) / camera.zoom;
-							selectedLayer.y += (event.getY() - pressPoint.y) / camera.zoom;
+							selectedLayer.x += (event.getX() - pressPoint.x) / (selectedLayer.scale + camera.zoom);
+							selectedLayer.y += (event.getY() - pressPoint.y) / (selectedLayer.scale + camera.zoom);;
 						}
 					} else {
 						pressed = true;
@@ -227,7 +264,7 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
 		public float x, y;
 		public float scale;
 		public Paint textPaint;
-		
+		public Bitmap bitmap;
 		
 		public Layer(String text) {
 			this.text = text;
@@ -240,7 +277,11 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
 			canvas.save();
 			canvas.scale(scale, scale);
 			
-			canvas.drawText(text, x, y, textPaint);
+			if (bitmap == null) {
+				canvas.drawText(text, x, y, textPaint);
+			} else {
+				canvas.drawBitmap(bitmap, x, y, null);
+			}
 			
 			canvas.restore();
 			

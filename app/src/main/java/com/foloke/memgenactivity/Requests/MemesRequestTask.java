@@ -1,4 +1,4 @@
-package com.foloke.memgenactivity;
+package com.foloke.memgenactivity.Requests;
 
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -21,8 +21,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import android.widget.*;
+import com.foloke.memgenactivity.*;
 
-public class RequestTask extends AsyncTask<LinearLayout, Void, List<Image>> {
+public class MemesRequestTask extends AsyncTask<LinearLayout, Void, List<Image>> {
 
     public LinearLayout contentList;
 
@@ -53,24 +54,9 @@ public class RequestTask extends AsyncTask<LinearLayout, Void, List<Image>> {
     protected void onPostExecute(List<Image> replies) {
 		if(replies != null) {
         	for (final Image reply : replies) {
-            	final View content = ((MGActivity)contentList.getContext()).createContent(contentList.getContext());
-            	TextView nickName = ((TextView) content.findViewById(R.id.contentNickname));
-            	final ImageView imageView = ((ImageView) content.findViewById(R.id.contentImage));
-           		final TextView ratingUp = ((TextView) content.findViewById(R.id.contentUpRating));
-            	ratingUp.setText("" + reply.getRatingUp());
-
-            	Button ratingUpButton = ((Button) content.findViewById(R.id.contentUpButton));
-            	ratingUpButton.setOnClickListener(new View.OnClickListener() {
-                	@Override
-                	public void onClick(View v) {
-                    	new RatingUpTask(ratingUp, reply.getId()).execute();
-                	}
-            	});
-
-            	contentList.addView(content);
-            	
-                imageView.setImageBitmap(BitmapFactory.decodeByteArray(reply.getImage(), 0, reply.getImage().length));
-                nickName.setText("" + reply.id);
+            	Content content = (Content)((MGActivity)contentList.getContext()).createContent(contentList.getContext());
+            	content.initContent(reply);
+				contentList.addView(content);
             	
         	}
 		} else {

@@ -18,6 +18,8 @@ import android.net.*;
 import android.*;
 import android.content.pm.*;
 import android.widget.TableRow.*;
+import android.widget.SearchView.*;
+import com.foloke.memgenactivity.Requests.*;
 
 
 public class MGActivity extends Activity {
@@ -28,7 +30,7 @@ public class MGActivity extends Activity {
 		try {
 			if(this.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
 			   != PackageManager.PERMISSION_GRANTED)
-				this.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+				this.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 			//
         setContentView(R.layout.main);
 		
@@ -117,16 +119,16 @@ public class MGActivity extends Activity {
 				Uri contentUri = ContentUris.withAppendedId(
 					MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id);
 				
-				Bitmap thumbnail = BitmapFactory.decodeFile(contentUri.getPath());
-				Bitmap bitmap = MediaStore.Images.Thumbnails.getThumbnail(
+				Bitmap bitmap = BitmapFactory.decodeFile(contentUri.getPath());
+				Bitmap thumbnail = MediaStore.Images.Thumbnails.getThumbnail(
 					getContentResolver(), id,
 					MediaStore.Images.Thumbnails.MINI_KIND,null);
 				ImageView image = new ImageView(this);
-				image.setImageBitmap(bitmap);
+				image.setImageBitmap(thumbnail);
 				
-				ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(LayoutParams.FILL_PARENT,
-				LayoutParams.FILL_PARENT);
-				image.setLayoutParams(layoutParams);
+				//ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(LayoutParams.FILL_PARENT,
+				//LayoutParams.FILL_PARENT);
+				//image.setLayoutParams(layoutParams);
 				
 				grid.addView(image);
 			}
@@ -155,7 +157,120 @@ public class MGActivity extends Activity {
 					editor.selectLayer(null);
 				}
 			});
-		
+			
+			Button saveCanvasButton = editorInclude.findViewById(R.id.editorSaveButton);
+			saveCanvasButton.setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+					try {
+						editor.thread.running = false;
+						editor.thread.join();
+						Canvas c = editor.getHolder().lockCanvas();
+						synchronized(editor.getHolder()) {
+							editor.toBitmap(c);
+							editor.getHolder().unlockCanvasAndPost(c);
+						}
+						editor.thread.running = true;
+						editor.thread.start();
+					} catch (Exception e) {
+							System.out.println(e);
+					}
+				}
+			});
+			
+			Button editorChangeTextButton = editorInclude.findViewById(R.id.editorChangeTextButton);
+			editorChangeTextButton.setOnClickListener(new OnClickListener(){
+				public void onClick(View v) {
+					if(editor.selectedLayer != null) {
+						final Editor.Layer layer = editor.selectedLayer;
+						final Dialog dialog = new Dialog(MGActivity.this);
+						dialog.setContentView(R.layout.text_dialog);
+						final EditText editText = dialog.findViewById(R.id.text_dialogEditText);
+						editText.setText(layer.text);
+						
+						Button okButton = dialog.findViewById(R.id.text_dialogOkButton);
+						okButton.setOnClickListener(new OnClickListener() {
+							public void onClick(View v) {
+								layer.text = editText.getText().toString();
+								dialog.cancel();
+							}
+						});
+						dialog.show();
+					}
+				}
+			});
+			
+			Button editorChangeImageButton = editorInclude.findViewById(R.id.editorChangeImageButton);
+			editorChangeImageButton.setOnClickListener(new OnClickListener() {
+				public void onClick(View v){
+					if(editor.selectedLayer!=null) {
+					final Editor.Layer layer = editor.selectedLayer;
+					final Dialog dialog = new Dialog(MGActivity.this);
+					dialog.setContentView(R.layout.image_dialog);
+					
+					GridLayout grid = dialog.findViewById(R.id.imageDialogGridLayout);
+					
+					String[] projection = new String[] {
+						MediaStore.Images.Media._ID
+					};
+
+
+					Cursor cursor = getApplicationContext().getContentResolver().query(
+						MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+						projection,
+						null,
+						null,
+						null
+					);
+
+					while (cursor.moveToNext()) {
+						try {
+						// Use an ID column from the projection to get
+						// a URI representing the media item itself.
+						int idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
+						long id = cursor.getLong(idColumn);
+						Uri contentUri = ContentUris.withAppendedId(
+							MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
+							
+						
+						final Bitmap bitmap = MediaStore.Images.Media.getBitmap(MGActivity.this.getContentResolver(), contentUri);
+						
+						Bitmap thumbnail = MediaStore.Images.Thumbnails.getThumbnail(
+							getContentResolver(), id,
+							MediaStore.Images.Thumbnails.MINI_KIND,null);
+						ImageView image = new ImageView(MGActivity.this);
+						image.setImageBitmap(thumbnail);
+						
+						image.setOnClickListener(new OnClickListener() {
+							public void onClick(View v) {
+								layer.bitmap = bitmap;
+								dialog.cancel();
+							}
+						});
+
+						//ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(LayoutParams.FILL_PARENT,
+						//LayoutParams.FILL_PARENT);
+						//image.setLayoutParams(layoutParams);
+
+						grid.addView(image);
+						} catch (Exception e) {
+							System.out.println(e);
+						}
+					}
+					
+					
+					Button okButton = dialog.findViewById(R.id.image_dialogOkButton);
+					okButton.setOnClickListener(new OnClickListener() {
+							public void onClick(View v) {
+								
+								dialog.cancel();
+							}
+					});
+					
+					dialog.show();
+				}
+				}
+			});
+			
 			getRequest(this, list);
 		} catch (Exception e) {
 			System.out.println(e);
@@ -163,13 +278,26 @@ public class MGActivity extends Activity {
 		
 
     }
-
-  
+	
     @Override
     protected void onStart() {
         super.onStart();
 		
     }
+
+	@Override
+	protected void onResume()
+	{
+		// TODO: Implement this method
+		super.onResume();
+		Editor editor = findViewById(R.id.editorcom);
+		if(!editor.thread.running) {
+			editor.thread.running = true;
+			editor.thread.start();
+		}
+	}
+	
+	
 	
 	public static View createContent(Context context) {
 		return LayoutInflater.from(context).inflate(R.layout.content, null);
@@ -178,7 +306,7 @@ public class MGActivity extends Activity {
 	public static void getRequest(Context context, LinearLayout container) {
 		Toast.makeText(context,"updating",Toast.LENGTH_SHORT).show();
 
-		new RequestTask().execute(container);
+		new MemesRequestTask().execute(container);
 	}
 
 
