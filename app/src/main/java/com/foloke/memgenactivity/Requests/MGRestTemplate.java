@@ -5,9 +5,11 @@ import android.util.Log;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.http.*;
+import org.apache.commons.codec.binary.*;
 
-public class MyRestTemplate extends RestTemplate {
-    public MyRestTemplate(int timeout) {
+public class MGRestTemplate extends RestTemplate {
+    public MGRestTemplate(int timeout) {
         if (getRequestFactory() instanceof SimpleClientHttpRequestFactory) {
             Log.d("HTTP", "HttpUrlConnection is used");
             ((SimpleClientHttpRequestFactory) getRequestFactory()).setConnectTimeout(timeout);
@@ -18,4 +20,15 @@ public class MyRestTemplate extends RestTemplate {
             ((HttpComponentsClientHttpRequestFactory) getRequestFactory()).setConnectTimeout(timeout);
         }
     }
+	
+	public HttpHeaders basicAuthHeader(){
+		String plainCreds = "login:password";
+		byte[] plainCredsBytes = plainCreds.getBytes();
+		byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
+		String base64Creds = new String(base64CredsBytes);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", "Basic " + base64Creds);
+		return headers;
+	}
 }

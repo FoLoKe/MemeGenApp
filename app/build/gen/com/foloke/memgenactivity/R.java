@@ -44,18 +44,20 @@ public final class R {
         public static final int imageDialogGridLayout=0x7f080010;
         public static final int image_dialogNoImage=0x7f080011;
         public static final int image_dialogOkButton=0x7f080012;
-        public static final int mainEditorInclude=0x7f080017;
-        public static final int mainFrameLayout=0x7f080015;
-        public static final int mainMenu=0x7f080019;
+        public static final int lentUpdateIcon=0x7f080015;
+        public static final int mainEditorInclude=0x7f080019;
+        public static final int mainFrameLayout=0x7f080016;
+        public static final int mainLentInclude=0x7f080018;
+        public static final int mainMenu=0x7f08001b;
         public static final int mainScrollView=0x7f080013;
-        public static final int mainUploadInclude=0x7f080018;
-        public static final int mainViewFlipper=0x7f080016;
-        public static final int menuEditorButton=0x7f08001b;
-        public static final int menuLentButton=0x7f08001a;
-        public static final int menuUploadButton=0x7f08001c;
-        public static final int text_dialogEditText=0x7f08001d;
-        public static final int text_dialogOkButton=0x7f08001e;
-        public static final int uploadGridLayout=0x7f08001f;
+        public static final int mainUploadInclude=0x7f08001a;
+        public static final int mainViewFlipper=0x7f080017;
+        public static final int menuEditorButton=0x7f08001d;
+        public static final int menuLentButton=0x7f08001c;
+        public static final int menuUploadButton=0x7f08001e;
+        public static final int text_dialogEditText=0x7f08001f;
+        public static final int text_dialogOkButton=0x7f080020;
+        public static final int uploadGridLayout=0x7f080021;
     }
     public static final class layout {
         public static final int content=0x7f040000;

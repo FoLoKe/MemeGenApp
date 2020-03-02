@@ -20,10 +20,17 @@ import android.content.pm.*;
 import android.widget.TableRow.*;
 import android.widget.SearchView.*;
 import com.foloke.memgenactivity.Requests.*;
+import com.foloke.memgenactivity.Entities.*;
 
 
 public class MGActivity extends Activity {
 
+	boolean updating = false;
+	
+	private LinearLayout list;
+	private View updateIcon;;
+	private RestController restController;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,28 +40,66 @@ public class MGActivity extends Activity {
 				this.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 			//
         setContentView(R.layout.main);
+		restController = new RestController(this);
 		
-		final LinearLayout list = findViewById(R.id.content);
-		final Activity context = this;
-		
-		View content = LayoutInflater.from(this).inflate(R.layout.content, null);
-		list.addView(content);
-
 		final ScrollView scroll = findViewById(R.id.mainScrollView);
+			list = findViewById(R.id.content);
+			updateIcon = findViewById(R.id.lentUpdateIcon);
+			updateIcon.setY(-updateIcon.getHeight());
 		
-		
-		
-		scroll.setOnScrollChangeListener(new OnScrollChangeListener() {
-			@Override
-			public void onScrollChange(View v, int x, int y, int ox, int oy) {
-				View view = scroll.getChildAt(scroll.getChildCount() - 1);
-				int diff = (view.getBottom() - (scroll.getHeight() + scroll.getScrollY()));
-
-				// if diff is zero, then the bottom has been reached
-				if (diff == 0) {
-					// do stuff
-					getRequest(context, list);
+		scroll.setOnTouchListener(new OnTouchListener() {
+			PointF start = new PointF();
+			int offset;
+			
+			
+			
+			public boolean onTouch(View v, MotionEvent m) {
+				try {
+					View updateIcon = findViewById(R.id.lentUpdateIcon);
+					View view = scroll.getChildAt(scroll.getChildCount() - 1);
+					int bottomDiff = (view.getBottom() - (scroll.getHeight() + scroll.getScrollY()));
+					int topDiff = (view.getTop() - scroll.getScrollY());
+					
+				switch (m.getAction()) {
+					case MotionEvent.ACTION_DOWN:
+						start.set(m.getX(), m.getY()); 
+						break;
+					case MotionEvent.ACTION_MOVE:
+						offset =  (int)( m.getY() - start.y);
+						
+						if(topDiff == 0 || bottomDiff <= 0) {
+							int updateIconOffset = offset;
+							if(updateIconOffset < 0) {
+								updateIconOffset = -updateIconOffset;
+							}
+							
+							updateIconOffset = Integer.min(250, updateIconOffset);
+							updateIcon.setY(updateIconOffset);
+						}
+						
+						break;
+					case MotionEvent.ACTION_UP: 
+						
+						if (offset < 0 && bottomDiff <= 0) {
+							if(list.getChildCount() > 0) {
+								Content lastContent = (Content)list.getChildAt(list.getChildCount() - 1);
+								Image lastMeme = lastContent.image;
+								if(lastMeme != null) {
+									restController.getMemes(((Content)list.getChildAt(list.getChildCount() - 1)).image.getId());
+								}
+							} else {
+								restController.getMemes(-1);
+							}
+						} else if (offset > 0 && topDiff == 0) {
+							restController.getMemes(-1);
+						}
+						break;
+					}
+				} catch (Exception e) {
+					System.out.println(e);
 				}
+				
+				return true;
 			}
 		});
 		
@@ -271,7 +316,8 @@ public class MGActivity extends Activity {
 				}
 			});
 			
-			getRequest(this, list);
+			LinearLayout list = findViewById(R.id.content);
+			restController.getMemes(-1);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -303,12 +349,10 @@ public class MGActivity extends Activity {
 		return LayoutInflater.from(context).inflate(R.layout.content, null);
 	} 
 	
-	public static void getRequest(Context context, LinearLayout container) {
-		Toast.makeText(context,"updating",Toast.LENGTH_SHORT).show();
-
-		new MemesRequestTask().execute(container);
-	}
-
+	
+	
+	
+	
 
 	
 }

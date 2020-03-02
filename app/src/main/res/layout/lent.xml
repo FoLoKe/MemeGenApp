@@ -1,5 +1,10 @@
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	
+	
+<ScrollView 
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:id="@+id/mainScrollView"
@@ -12,4 +17,13 @@
 		android:orientation="vertical">
 	</LinearLayout>
 </ScrollView>
+	<ImageView
+		android:layout_width="150px"
+		android:layout_height="150px"
+		android:id="@+id/lentUpdateIcon"
+		android:src="@drawable/no_image"
+		android:layout_gravity="center_horizontal"
+	/>
+	
+</FrameLayout>
 

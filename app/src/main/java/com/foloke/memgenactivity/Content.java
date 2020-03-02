@@ -9,7 +9,7 @@ import android.graphics.*;
 
 public class Content extends LinearLayout
 {
-	private Image image;
+	public Image image;
 	
 	
 	public Content(Context context, AttributeSet attributes){
