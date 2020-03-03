@@ -19,14 +19,14 @@ import com.foloke.memgenactivity.*;
 import org.apache.http.HttpStatus;
 import android.widget.*;
 import org.springframework.http.*;
+import com.foloke.memgenactivity.Entities.*;
 
 
 
-public class RatingRequestTask extends AsyncTask<String, Void, Meme> {
+public class RatingRequestTask extends AsyncTask<String, Void, PostInfo> {
     
 	private RestController restController;
-	private boolean type;
-	private boolean posted;
+	
 	
     public RatingRequestTask(RestController parent) {
         super();
@@ -35,10 +35,10 @@ public class RatingRequestTask extends AsyncTask<String, Void, Meme> {
     }
 
     @Override
-    protected Meme doInBackground(String params[]) {
+    protected PostInfo doInBackground(String params[]) {
         try {
 			int id = Integer.parseInt(params[0]);
-			type = Boolean.parseBoolean(params[1]);
+			boolean type = Boolean.parseBoolean(params[1]);
 			
 			String destination = "/postRating?id=" + id + "&type=" + type;
 				
@@ -49,15 +49,15 @@ public class RatingRequestTask extends AsyncTask<String, Void, Meme> {
 			
             Meme image = new Meme();
             image.setId(id);
-			HttpEntity<Meme> request = new HttpEntity<Meme>(image, restTemplate.basicAuthHeader());
-            ResponseEntity<Object[]> result = restTemplate.exchange(url, HttpMethod.POST, request, Object[].class);
+			HttpEntity<String> request = new HttpEntity<String>(restTemplate.basicAuthHeader());
+            ResponseEntity<PostInfo> result = restTemplate.exchange(url, HttpMethod.POST, request, PostInfo.class);
 			
 			
 			
 			if(result.getStatusCode().value() == HttpStatus.SC_ACCEPTED) {
-				Object[] response = result.getBody();
-				posted = Boolean.parseBoolean((String)response[0]);
-				return (Meme)response[1];
+				PostInfo response = result.getBody();
+				
+				return response;
 			}
             return null;
         } catch (Exception e) {
@@ -68,12 +68,8 @@ public class RatingRequestTask extends AsyncTask<String, Void, Meme> {
     }
 
     @Override
-    protected void onPostExecute(Meme meme) {
-		if(meme != null) {
-			restController.updateRating(meme,type, posted);
-		} else {
-			restController.updateRating(null, false, false);
-		}
+    protected void onPostExecute(PostInfo info) {
+		restController.updateRating(info);
     }
 
     

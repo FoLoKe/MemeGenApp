@@ -56,20 +56,17 @@ public class RestController
 		}
 	}
 	
-	public void updateRating(Meme meme, boolean type, boolean posted) {
-		if(meme != null) {
+	public void updateRating(PostInfo info) {
+		if(info != null) {
 			View lentInclude = context.findViewById(R.id.mainLentInclude);
 			
 			LinearLayout lentList = lentInclude.findViewById(R.id.contentLinearLayout);
 		
 			for(int i = 0; i < lentList.getChildCount(); i++) {
 				Content content = (Content)lentList.getChildAt(i);
-				if(content.getId() == meme.getId()) {
-					if(type) {
-						content.setLikes(meme.getRatingUp(), posted);
-					} else {
-						content.setDislikes(meme.getRatingDown(), posted);
-					}
+				if(content.getId() == info.getMeme().getId()) {
+						content.setLikes(info.getLikes(), info.isLikeState());
+						content.setDislikes(info.getDislikes(), info.isDislikeState());
 				}
 			}
 		}
