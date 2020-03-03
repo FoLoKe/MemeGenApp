@@ -3,7 +3,7 @@ package com.foloke.memgenactivity.Entities;
 
 import java.util.Set;
 
-public class Image {
+public class Meme {
 
 
     public int id;

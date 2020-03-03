@@ -12,18 +12,19 @@ public class RestController
 {
 	private MGActivity context;
 	private boolean memesUpdating;
+	private boolean ratingUpdating;
 	
 	public RestController(MGActivity context) {
 		this.context = context;
 	}
 	
-	public void updateMemes(List<Image> memes) {
+	public void updateMemes(List<Meme> memes) {
 		View lentInclude = context.findViewById(R.id.mainLentInclude);
 		View updateIcon = lentInclude.findViewById(R.id.lentUpdateIcon);
 		LinearLayout lentList = lentInclude.findViewById(R.id.contentLinearLayout);
 		
 		if(memes.size() > 0) {
-			for(Image image : memes) {
+			for(Meme image : memes) {
 				Content content = (Content)context.createContent(context);
 				content.initContent(image);
 				lentList.addView(content);
@@ -44,6 +45,33 @@ public class RestController
 		} else {
 			Toast.makeText(context, "wait", Toast.LENGTH_SHORT).show();
 		}
+	}
+	
+	public void postRating(int id, boolean type) {
+		if(!ratingUpdating) {
+			ratingUpdating = true;
+			Toast.makeText(context,"updating",Toast.LENGTH_SHORT).show();
+			String[] params = {"id=" + id + "&type=" + type};
+			new RatingRequestTask(this).execute(params);
+		}
+	}
+	
+	public void updateRating(Meme meme, boolean type, boolean posted) {
+		if(meme != null) {
+			View lentInclude = context.findViewById(R.id.mainLentInclude);
+			
+			LinearLayout lentList = lentInclude.findViewById(R.id.contentLinearLayout);
 		
+			for(int i = 0; i < lentList.getChildCount(); i++) {
+				Content content = (Content)lentList.getChildAt(i);
+				if(content.getId() == meme.getId()) {
+					if(type) {
+						content.setLikes(meme.getRatingUp(), posted);
+					} else {
+						content.setDislikes(meme.getRatingDown(), posted);
+					}
+				}
+			}
+		}
 	}
 }

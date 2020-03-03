@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.foloke.memgenactivity.Entities.Image;
+import com.foloke.memgenactivity.Entities.Meme;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -22,52 +22,44 @@ import org.springframework.http.*;
 
 
 
-public class RatingRequestTask extends AsyncTask<Boolean, Void, Boolean> {
-    public int id;
-    public Content content;
-
-    public RatingRequestTask(Content content, int id) {
+public class RatingRequestTask extends AsyncTask<String, Void, Meme> {
+    
+	private RestController restController;
+	private boolean type;
+	private boolean posted;
+	
+    public RatingRequestTask(RestController parent) {
         super();
-        this.content = content;
-        this.id = id;
+        
+		this.restController = parent;
     }
 
     @Override
-    protected Boolean doInBackground(Boolean params[]) {
+    protected Meme doInBackground(String params[]) {
         try {
-			boolean rating = params[0];
-			String destination = "";
+			int id = Integer.parseInt(params[0]);
+			type = Boolean.parseBoolean(params[1]);
 			
-			if(rating) {
-				destination = "/ratingUp";
-			} else {
-				destination = "ratingDown";
-			}
+			String destination = "/postRating?id=" + id + "&type=" + type;
 				
             final String url = "http://31.42.45.42:10204" + destination;
             MGRestTemplate restTemplate = new MGRestTemplate(1000);
 			
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 			
-            Image image = new Image();
+            Meme image = new Meme();
             image.setId(id);
-			HttpEntity<Image> request = new HttpEntity<Image>(image, restTemplate.basicAuthHeader());
-            ResponseEntity result = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+			HttpEntity<Meme> request = new HttpEntity<Meme>(image, restTemplate.basicAuthHeader());
+            ResponseEntity<Object[]> result = restTemplate.exchange(url, HttpMethod.POST, request, Object[].class);
+			
+			
 			
 			if(result.getStatusCode().value() == HttpStatus.SC_ACCEPTED) {
-				String response = (String)result.getBody();
-				String[] values = response.split(" ");
-				int actual = Integer.parseInt(values[0]);
-				boolean posted = Boolean.parseBoolean(values[1]);
-		
-				if(rating) {
-					content.setLikes(actual, posted);
-				} else {
-         	  	 	content.setDislikes(actual, posted);
-				}
-				return true;
+				Object[] response = result.getBody();
+				posted = Boolean.parseBoolean((String)response[0]);
+				return (Meme)response[1];
 			}
-            return true;
+            return null;
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -76,9 +68,11 @@ public class RatingRequestTask extends AsyncTask<Boolean, Void, Boolean> {
     }
 
     @Override
-    protected void onPostExecute(Boolean response) {
-		if(!response){
-			Toast.makeText(content.getContext(),"bad reaponse",Toast.LENGTH_SHORT);
+    protected void onPostExecute(Meme meme) {
+		if(meme != null) {
+			restController.updateRating(meme,type, posted);
+		} else {
+			restController.updateRating(null, false, false);
 		}
     }
 

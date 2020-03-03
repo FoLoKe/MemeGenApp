@@ -24,7 +24,6 @@ public final class R {
         public static final int no_image=0x7f020000;
     }
     public static final class id {
-        public static final int content=0x7f080014;
         public static final int contentDownButton=0x7f080006;
         public static final int contentDownRating=0x7f080005;
         public static final int contentImage=0x7f080002;
@@ -44,6 +43,7 @@ public final class R {
         public static final int imageDialogGridLayout=0x7f080010;
         public static final int image_dialogNoImage=0x7f080011;
         public static final int image_dialogOkButton=0x7f080012;
+        public static final int lentContentList=0x7f080014;
         public static final int lentUpdateIcon=0x7f080015;
         public static final int mainEditorInclude=0x7f080019;
         public static final int mainFrameLayout=0x7f080016;

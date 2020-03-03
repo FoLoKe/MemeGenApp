@@ -9,14 +9,15 @@ import android.graphics.*;
 
 public class Content extends LinearLayout
 {
-	public Image image;
-	
+	public Meme meme;
+	private UIController uIController;
 	
 	public Content(Context context, AttributeSet attributes){
 		super(context, attributes);
+		this.uIController = ((MGActivity)context).uiController;
 	}
 	
-	public void initContent(Image image) {
+	public void initContent(Meme image) {
 		TextView nickName = ((TextView) this.findViewById(R.id.contentNickname));
 		ImageView imageView = ((ImageView) this.findViewById(R.id.contentImage));
 		TextView ratingUpTextView = ((TextView) this.findViewById(R.id.contentUpRating));
@@ -49,7 +50,7 @@ public class Content extends LinearLayout
 		
 		@Override
 		public void onClick(View v) {
-			new RatingRequestTask(Content.this, image.getId()).execute(action);
+			uIController.likeRequest(Content.this.meme.id ,action);
 		}
 	}
 	
