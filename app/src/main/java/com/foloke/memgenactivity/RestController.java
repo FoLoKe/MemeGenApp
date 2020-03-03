@@ -56,7 +56,7 @@ public class RestController
 		}
 	}
 	
-	public void updateRating(PostInfo info) {
+	public void updateRating(MemeInfo info) {
 		if(info != null) {
 			View lentInclude = context.findViewById(R.id.mainLentInclude);
 			

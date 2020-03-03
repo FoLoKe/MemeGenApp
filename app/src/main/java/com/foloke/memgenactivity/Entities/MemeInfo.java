@@ -1,6 +1,6 @@
 package com.foloke.memgenactivity.Entities;
 
-public class PostInfo
+public class MemeInfo
 {
 	private Meme meme;
 	

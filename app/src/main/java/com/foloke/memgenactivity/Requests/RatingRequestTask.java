@@ -23,7 +23,7 @@ import com.foloke.memgenactivity.Entities.*;
 
 
 
-public class RatingRequestTask extends AsyncTask<String, Void, PostInfo> {
+public class RatingRequestTask extends AsyncTask<String, Void, MemeInfo> {
     
 	private RestController restController;
 	
@@ -35,7 +35,7 @@ public class RatingRequestTask extends AsyncTask<String, Void, PostInfo> {
     }
 
     @Override
-    protected PostInfo doInBackground(String params[]) {
+    protected MemeInfo doInBackground(String params[]) {
         try {
 			int id = Integer.parseInt(params[0]);
 			boolean type = Boolean.parseBoolean(params[1]);
@@ -50,12 +50,12 @@ public class RatingRequestTask extends AsyncTask<String, Void, PostInfo> {
             Meme image = new Meme();
             image.setId(id);
 			HttpEntity<String> request = new HttpEntity<String>(restTemplate.basicAuthHeader());
-            ResponseEntity<PostInfo> result = restTemplate.exchange(url, HttpMethod.POST, request, PostInfo.class);
+            ResponseEntity<MemeInfo> result = restTemplate.exchange(url, HttpMethod.POST, request, MemeInfo.class);
 			
 			
 			
 			if(result.getStatusCode().value() == HttpStatus.SC_ACCEPTED) {
-				PostInfo response = result.getBody();
+				MemeInfo response = result.getBody();
 				
 				return response;
 			}
@@ -68,7 +68,7 @@ public class RatingRequestTask extends AsyncTask<String, Void, PostInfo> {
     }
 
     @Override
-    protected void onPostExecute(PostInfo info) {
+    protected void onPostExecute(MemeInfo info) {
 		restController.updateRating(info);
     }
 
