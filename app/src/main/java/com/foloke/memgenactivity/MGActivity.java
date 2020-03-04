@@ -2,31 +2,20 @@ package com.foloke.memgenactivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import android.app.*;
-import android.widget.*;
-import android.view.View.*;
-import android.graphics.*;
 import android.view.*;
 import android.content.*;
-import android.provider.*;
-import android.database.*;
-import java.net.*;
-import android.util.*;
-import android.net.*;
 import android.*;
 import android.content.pm.*;
-import android.widget.TableRow.*;
-import android.widget.SearchView.*;
-import com.foloke.memgenactivity.Requests.*;
-import com.foloke.memgenactivity.Entities.*;
 
 
 public class MGActivity extends Activity {
 
 	private RestController restController;
 	public UIController uiController;
+	public static String password = "password";
+	public static String login = "login";
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +45,7 @@ public class MGActivity extends Activity {
 	{
 		super.onResume();
 		Editor editor = findViewById(R.id.editorcom);
-		if(!editor.thread.running) {
-			editor.thread.running = true;
-			editor.thread.start();
-		}
+		editor.resume();
 	}
 
 	public static View createContent(Context context) {

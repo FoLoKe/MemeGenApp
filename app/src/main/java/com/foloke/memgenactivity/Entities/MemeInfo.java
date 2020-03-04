@@ -58,4 +58,5 @@ public class MemeInfo
 	public boolean isDislikeState()
 	{
 		return dislikeState;
-	}}
+	}
+}

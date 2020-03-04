@@ -10,9 +10,9 @@ public class Meme {
 
     private byte[] image;
 
-    private int ratingUp;
+    private Set<User> likes;
 
-    private int ratingDown;
+    private Set<User> dislikes;
 
     private User user;
 
@@ -42,20 +42,20 @@ public class Meme {
         this.image = image;
     }
 
-    public int getRatingUp() {
-        return ratingUp;
+    public Set<User> getLikes() {
+        return likes;
     }
 
-    public void setRatingUp(int ratingUp) {
-        this.ratingUp = ratingUp;
+    public void setLikes(Set<User> likes) {
+        this.likes = likes;
     }
 
-    public int getRatingDown() {
-        return ratingDown;
+    public Set<User> getDislikes() {
+        return dislikes;
     }
 
-    public void setRatingDown(int ratingDown) {
-        this.ratingDown = ratingDown;
+    public void setDislikes(Set<User> dislikes) {
+        this.dislikes = dislikes;
     }
 
     public User getUser() {

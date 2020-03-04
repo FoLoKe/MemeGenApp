@@ -4,7 +4,6 @@ import android.util.*;
 import android.content.*;
 import com.foloke.memgenactivity.Entities.*;
 import android.view.*;
-import com.foloke.memgenactivity.Requests.*;
 import android.graphics.*;
 
 public class Content extends LinearLayout
@@ -17,27 +16,22 @@ public class Content extends LinearLayout
 		this.uIController = ((MGActivity)context).uiController;
 	}
 	
-	public void initContent(Meme image) {
+	public void initContent(MemeInfo memeInfo) {
+		this.meme = memeInfo.getMeme();
 		TextView nickName = ((TextView) this.findViewById(R.id.contentNickname));
 		ImageView imageView = ((ImageView) this.findViewById(R.id.contentImage));
-		TextView ratingUpTextView = ((TextView) this.findViewById(R.id.contentUpRating));
-		ratingUpTextView.setText("" + image.getRatingUp());
-		
-		TextView ratingDownTextView = ((TextView) this.findViewById(R.id.contentUpRating));
-		ratingDownTextView.setText("" + image.getRatingDown());
 
 		Button ratingUpButton = ((Button) this.findViewById(R.id.contentUpButton));
 		ratingUpButton.setOnClickListener(new LikeButtonListener(true));
-		ratingUpButton.setBackgroundColor(Color.GRAY);
-		
+
+		setLikes(memeInfo.getLikes(), memeInfo.isLikeState());
+		setDislikes(memeInfo.getDislikes(), memeInfo.isDislikeState());
+
 		Button ratingDownButton = ((Button) this.findViewById(R.id.contentDownButton));
 		ratingDownButton.setOnClickListener(new LikeButtonListener(false));
-		ratingDownButton.setBackgroundColor(Color.GRAY);
-		
-		
 
-		imageView.setImageBitmap(BitmapFactory.decodeByteArray(image.getImage(), 0, image.getImage().length));
-		nickName.setText("" + image.id);
+		imageView.setImageBitmap(BitmapFactory.decodeByteArray(meme.getImage(), 0, meme.getImage().length));
+		nickName.setText("" + meme.id);
 	}
 	
 	private class LikeButtonListener implements View.OnClickListener {
@@ -59,9 +53,6 @@ public class Content extends LinearLayout
 		ratingUpTextView.setText(Integer.toString(likes));
 		
 		Button ratingUpButton = ((Button) this.findViewById(R.id.contentUpButton));
-		Button ratingDownButton = ((Button) this.findViewById(R.id.contentDownButton));
-		
-		ratingDownButton.setBackgroundColor(Color.GRAY);
 		
 		if(posted) {
 			ratingUpButton.setBackgroundColor(Color.GREEN);
@@ -71,17 +62,13 @@ public class Content extends LinearLayout
 	}
 	
 	public void setDislikes(int dislikes, boolean posted) {
-		TextView ratingDownTextView = ((TextView) this.findViewById(R.id.contentUpRating));
+		TextView ratingDownTextView = ((TextView) this.findViewById(R.id.contentDownRating));
 		ratingDownTextView.setText(Integer.toString(dislikes));
-		
-		
-		Button ratingUpButton = ((Button) this.findViewById(R.id.contentUpButton));
+
 		Button ratingDownButton = ((Button) this.findViewById(R.id.contentDownButton));
-		
-		ratingUpButton.setBackgroundColor(Color.GRAY);
 
 		if(posted) {
-			ratingDownButton.setBackgroundColor(Color.GREEN);
+			ratingDownButton.setBackgroundColor(Color.RED);
 		} else {
 			ratingDownButton.setBackgroundColor(Color.GRAY);
 		}

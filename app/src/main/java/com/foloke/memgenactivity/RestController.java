@@ -1,8 +1,5 @@
 package com.foloke.memgenactivity;
-import android.os.*;
 import com.foloke.memgenactivity.Requests.*;
-import org.springframework.http.converter.json.*;
-import org.springframework.http.*;
 import java.util.*;
 import com.foloke.memgenactivity.Entities.*;
 import android.widget.*;
@@ -18,15 +15,15 @@ public class RestController
 		this.context = context;
 	}
 	
-	public void updateMemes(List<Meme> memes) {
+	public void updateMemes(List<MemeInfo> memesInfos) {
 		View lentInclude = context.findViewById(R.id.mainLentInclude);
 		View updateIcon = lentInclude.findViewById(R.id.lentUpdateIcon);
-		LinearLayout lentList = lentInclude.findViewById(R.id.contentLinearLayout);
+		LinearLayout lentList = lentInclude.findViewById(R.id.lentContentList);
 		
-		if(memes.size() > 0) {
-			for(Meme image : memes) {
+		if(memesInfos.size() > 0) {
+			for(MemeInfo memeInfo : memesInfos) {
 				Content content = (Content)context.createContent(context);
-				content.initContent(image);
+				content.initContent(memeInfo);
 				lentList.addView(content);
 			}
 		} else {
@@ -60,15 +57,16 @@ public class RestController
 		if(info != null) {
 			View lentInclude = context.findViewById(R.id.mainLentInclude);
 			
-			LinearLayout lentList = lentInclude.findViewById(R.id.contentLinearLayout);
+			LinearLayout lentList = lentInclude.findViewById(R.id.lentContentList);
 		
 			for(int i = 0; i < lentList.getChildCount(); i++) {
 				Content content = (Content)lentList.getChildAt(i);
-				if(content.getId() == info.getMeme().getId()) {
+				if(content.meme.getId() == info.getMeme().getId()) {
 						content.setLikes(info.getLikes(), info.isLikeState());
 						content.setDislikes(info.getDislikes(), info.isDislikeState());
 				}
 			}
 		}
+		ratingUpdating = false;
 	}
 }

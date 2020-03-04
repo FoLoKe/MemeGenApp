@@ -14,7 +14,7 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
 	Camera camera;
 	RectF canvasRegion;
 	Paint canvasColor;
-	EditorThread thread;
+	public EditorThread thread;
 	List<Layer> layers;
 	
 	boolean gestureInProgress = false;
@@ -100,7 +100,7 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
 	
 	private class EditorThread extends Thread
 	{
-		boolean running = true;
+		public boolean running = true;
 		SurfaceHolder surfaceHolder;
 		Editor editor;
 		
@@ -289,6 +289,30 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
 		
 		
 		
+	}
+
+	public void save() {
+		try {
+
+			thread.running = false;
+			thread.join();
+			Canvas c = getHolder().lockCanvas();
+			synchronized(getHolder()) {
+				toBitmap(c);
+				getHolder().unlockCanvasAndPost(c);
+			}
+			thread.running = true;
+			thread.start();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	public void resume() {
+		if(!thread.running) {
+			thread.running = true;
+			thread.start();
+		}
 	}
 	
 	public Layer selectedLayer;

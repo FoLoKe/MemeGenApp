@@ -2,6 +2,8 @@ package com.foloke.memgenactivity.Requests;
 
 import android.util.Log;
 
+import com.foloke.memgenactivity.MGActivity;
+
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
@@ -22,7 +24,7 @@ public class MGRestTemplate extends RestTemplate {
     }
 	
 	public HttpHeaders basicAuthHeader(){
-		String plainCreds = "login:password";
+		String plainCreds = MGActivity.login + ":" + MGActivity.password;
 		byte[] plainCredsBytes = plainCreds.getBytes();
 		byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
 		String base64Creds = new String(base64CredsBytes);
