@@ -8,6 +8,8 @@ public class User {
 
     private String password;
 
+    private String role;
+
     private boolean banned;
 
     public int getId() {
@@ -40,5 +42,13 @@ public class User {
 
     public void setBanned(boolean banned) {
         this.banned = banned;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

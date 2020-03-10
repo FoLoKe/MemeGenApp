@@ -16,9 +16,8 @@ public class MemeSendingTask extends AsyncTask<Meme, Void, String>
 	@Override
 	protected String doInBackground(Meme[] params)
 	{
-		// TODO: Implement this method
 		if(params != null && params.length >= 1) {
-			Meme template = params[1];
+			Meme template = params[0];
 			String url = "http://31.42.45.42:10204/postMeme";
             MGRestTemplate restTemplate = new MGRestTemplate(1000);
 
@@ -29,7 +28,11 @@ public class MemeSendingTask extends AsyncTask<Meme, Void, String>
                 return null;
             } else {
                 HttpEntity<Meme> request = new HttpEntity<Meme>(template, restTemplate.basicAuthHeader());
-                response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+                try {
+					response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+				} catch (Exception e) {
+                	return null;
+				}
             }
 			return response.getBody();
 		}
@@ -40,8 +43,8 @@ public class MemeSendingTask extends AsyncTask<Meme, Void, String>
 	protected void onPostExecute(String result)
 	{
 		if(result == null) {
-			restController.templatePosted(false);
+			restController.memePosted(false);
 		}
-		restController.templatePosted(false);
+		restController.memePosted(true);
 	}
 }

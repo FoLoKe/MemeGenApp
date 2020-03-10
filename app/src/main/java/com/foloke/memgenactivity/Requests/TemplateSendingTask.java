@@ -17,10 +17,9 @@ public class TemplateSendingTask extends AsyncTask<Template, Void, String>
 	@Override
 	protected String doInBackground(Template[] params)
 	{
-		// TODO: Implement this method
 		if(params != null && params.length >= 1) {
-			Template template = params[1];
-			String url = "http://31.42.45.42:10204/postMeme";
+			Template template = params[0];
+			String url = "http://31.42.45.42:10204/postTemplate";
             MGRestTemplate restTemplate = new MGRestTemplate(1000);
 
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
@@ -29,8 +28,12 @@ public class TemplateSendingTask extends AsyncTask<Template, Void, String>
             if(MGActivity.password == null) {
                 return null;
             } else {
-                HttpEntity<Template> request = new HttpEntity<Template>(template, restTemplate.basicAuthHeader());
-                response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+                HttpEntity<Template> request = new HttpEntity<>(template, restTemplate.basicAuthHeader());
+                try {
+					response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+				} catch (Exception e) {
+                	return null;
+				}
             }
 			return response.getBody();
 		}
@@ -41,8 +44,8 @@ public class TemplateSendingTask extends AsyncTask<Template, Void, String>
 	protected void onPostExecute(String result)
 	{
 		if(result == null) {
-			restController.memePosted(false);
+			restController.templatePosted(false);
 		}
-		restController.memePosted(false);
+		restController.templatePosted(true);
 	}
 }

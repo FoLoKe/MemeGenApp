@@ -18,26 +18,28 @@ public class Content extends LinearLayout
 	
 	public void initContent(MemeInfo memeInfo) {
 		this.meme = memeInfo.getMeme();
-		TextView nickName = ((TextView) this.findViewById(R.id.contentNickname));
-		ImageView imageView = ((ImageView) this.findViewById(R.id.contentImage));
+		TextView nickName = this.findViewById(R.id.contentNickname);
+		ImageView imageView = this.findViewById(R.id.contentImage);
 
-		Button ratingUpButton = ((Button) this.findViewById(R.id.contentUpButton));
+		Button ratingUpButton = this.findViewById(R.id.contentUpButton);
 		ratingUpButton.setOnClickListener(new LikeButtonListener(true));
 
 		setLikes(memeInfo.getLikes(), memeInfo.isLikeState());
 		setDislikes(memeInfo.getDislikes(), memeInfo.isDislikeState());
 
-		Button ratingDownButton = ((Button) this.findViewById(R.id.contentDownButton));
+		Button ratingDownButton = this.findViewById(R.id.contentDownButton);
 		ratingDownButton.setOnClickListener(new LikeButtonListener(false));
 
 		imageView.setImageBitmap(BitmapFactory.decodeByteArray(meme.getImage(), 0, meme.getImage().length));
-		nickName.setText("" + meme.id);
+		if(meme.getUser() != null) {
+			nickName.setText(meme.getUser().getName());
+		}
 	}
 	
 	private class LikeButtonListener implements View.OnClickListener {
 		
 		private boolean action;
-		public LikeButtonListener(boolean action) {
+		LikeButtonListener(boolean action) {
 			super();
 			this.action = action;
 		}
@@ -49,10 +51,10 @@ public class Content extends LinearLayout
 	}
 	
 	public void setLikes(int likes, boolean posted) {
-		TextView ratingUpTextView = ((TextView) this.findViewById(R.id.contentUpRating));
+		TextView ratingUpTextView = this.findViewById(R.id.contentUpRating);
 		ratingUpTextView.setText(Integer.toString(likes));
 		
-		Button ratingUpButton = ((Button) this.findViewById(R.id.contentUpButton));
+		Button ratingUpButton = this.findViewById(R.id.contentUpButton);
 		
 		if(posted) {
 			ratingUpButton.setBackgroundColor(Color.GREEN);
@@ -62,10 +64,10 @@ public class Content extends LinearLayout
 	}
 	
 	public void setDislikes(int dislikes, boolean posted) {
-		TextView ratingDownTextView = ((TextView) this.findViewById(R.id.contentDownRating));
+		TextView ratingDownTextView = this.findViewById(R.id.contentDownRating);
 		ratingDownTextView.setText(Integer.toString(dislikes));
 
-		Button ratingDownButton = ((Button) this.findViewById(R.id.contentDownButton));
+		Button ratingDownButton = this.findViewById(R.id.contentDownButton);
 
 		if(posted) {
 			ratingDownButton.setBackgroundColor(Color.RED);

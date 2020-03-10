@@ -70,12 +70,15 @@ public class MGActivity extends Activity {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 		meme.setImage(stream.toByteArray());
+		Set<Tag> tagsList = new LinkedHashSet<>();
+
 		for(String stringTag : tags) {
 			Tag tag = new Tag();
 			tag.setName(stringTag);
-			meme.getTags().add(tag);
-
+			tagsList.add(tag);
 		}
+
+		meme.setTags(tagsList);
 		restController.postMeme(meme);
 	}
 	
@@ -84,13 +87,14 @@ public class MGActivity extends Activity {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 		template.setImage(stream.toByteArray());
-		
+		Set<Tag> tagsList = new LinkedHashSet<>();
+
 		for(String stringTag : tags) {
 			Tag tag = new Tag();
 			tag.setName(stringTag);
-			template.getTags().add(tag);
-			
+			tagsList.add(tag);
 		}
+		template.setTags(tagsList);
 		restController.postTemplate(template);
 	}
 	

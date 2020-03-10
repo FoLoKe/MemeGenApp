@@ -9,6 +9,8 @@ public class Template
 	
 	private Set<Tag> tags;
 
+	private User user;
+
 	public void setTags(Set<Tag> tags)
 	{
 		this.tags = tags;
@@ -18,7 +20,6 @@ public class Template
 	{
 		return tags;
 	}
-
 
 	public void setId(int id)
 	{
@@ -39,5 +40,12 @@ public class Template
 	{
 		return image;
 	}
-	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

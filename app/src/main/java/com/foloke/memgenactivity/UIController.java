@@ -9,6 +9,8 @@ import android.database.*;
 import android.net.*;
 import android.content.*;
 import android.app.*;
+
+import java.io.IOException;
 import java.util.*;
 import android.os.*;
 
@@ -128,39 +130,45 @@ public class UIController
 				);
 
 				while (cursor.moveToNext()) {
-					int idColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID);
+					int idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
 					long id = cursor.getLong(idColumn);
 					Uri contentUri = ContentUris.withAppendedId(
-						MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id);
+						MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
 
-					final Bitmap bitmap = BitmapFactory.decodeFile(contentUri.getPath());
-					Bitmap thumbnail = MediaStore.Images.Thumbnails.getThumbnail(
-						context.getContentResolver(), id,
-						MediaStore.Images.Thumbnails.MINI_KIND, null);
-					ImageView image = new ImageView(context);
-					image.setImageBitmap(thumbnail);
-					image.setOnClickListener(new OnClickListener() {
+					final Bitmap bitmap;
+					try {
+						bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), contentUri);
+						Bitmap thumbnail = MediaStore.Images.Thumbnails.getThumbnail(
+								context.getContentResolver(), id,
+								MediaStore.Images.Thumbnails.MINI_KIND, null);
+						ImageView image = new ImageView(context);
+						image.setImageBitmap(thumbnail);
+						image.setOnClickListener(new OnClickListener() {
 							public void onClick(View v) {
-								
+
 								final Dialog dialog = new Dialog(context);
 								dialog.setContentView(R.layout.upload_dialog);
 								ImageView imageView = dialog.findViewById(R.id.upload_dialogImageView);
 								imageView.setImageBitmap(bitmap);
 
 								dialog.findViewById(R.id.upload_dialogOkButton).setOnClickListener(new OnClickListener() {
-										public void onClick(View v) {
-											EditText editText = dialog.findViewById(R.id.upload_dialogTagsEditText);
-											String[] tags = editText.getText().toString().split(", ");
-											context.postTemplate(bitmap, tags);	
-											dialog.cancel();
-										}
-									});
+									public void onClick(View v) {
+										EditText editText = dialog.findViewById(R.id.upload_dialogTagsEditText);
+										String[] tags = editText.getText().toString().split(", ");
+										context.postTemplate(bitmap, tags);
+										dialog.cancel();
+									}
+								});
 
 								dialog.show();
 							}
 						});
 
-					grid.addView(image);
+						grid.addView(image);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
 				}
 			}
 		});
@@ -249,29 +257,27 @@ public class UIController
 					openedDialog = new Dialog(context);
 					openedDialog.setContentView(R.layout.image_dialog);
 					initLocal();
-					
+
 					RadioGroup radioGroup = openedDialog.findViewById(R.id.imageDialogRadioGroup);
 					RadioButton radioButtonLocal = radioGroup.findViewById(R.id.imageDialogRadioButtonLocal);
 					RadioButton radioButtonInternet = radioGroup.findViewById(R.id.imageDialogRadioButtonInternet);
-					
-					radioButtonLocal.setOnClickListener(new OnClickListener() {
-							public void onClick(View v) {
-								ViewFlipper viewFlipper = openedDialog.findViewById(R.id.imageDialogViewFlipper);
-								viewFlipper.setDisplayedChild(0);
-								initLocal();
-							}
-						});
-					
-					radioButtonInternet.setOnClickListener(new OnClickListener() {
-							public void onClick(View v) {
-								ViewFlipper viewFlipper = openedDialog.findViewById(R.id.imageDialogViewFlipper);
-								viewFlipper.setDisplayedChild(1);
-								initInternet();
-							}
-						});
 
-					
-					}
+					radioButtonLocal.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							ViewFlipper viewFlipper = openedDialog.findViewById(R.id.imageDialogViewFlipper);
+							viewFlipper.setDisplayedChild(0);
+							initLocal();
+						}
+					});
+
+					radioButtonInternet.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							ViewFlipper viewFlipper = openedDialog.findViewById(R.id.imageDialogViewFlipper);
+							viewFlipper.setDisplayedChild(1);
+							initInternet();
+						}
+					});
+
 
 					Button okButton = openedDialog.findViewById(R.id.image_dialogOkButton);
 					okButton.setOnClickListener(new OnClickListener() {
@@ -281,6 +287,8 @@ public class UIController
 					});
 					openedDialog.show();
 				}
+
+			}
 		});
 		
 		TextView loginTextView = context.findViewById(R.id.mainNicknameTextView);
@@ -416,25 +424,24 @@ public class UIController
 						final Bitmap thumbnail = MediaStore.Images.Thumbnails.getThumbnail(
 							context.getContentResolver(), id,
 							MediaStore.Images.Thumbnails.MINI_KIND, null);
-							
-						final ImageView image = new ImageView(context);
-						
-						image.post(new Runnable() {
-								public void run() {
-									image.setImageBitmap(thumbnail);
 
-									image.setOnClickListener(new OnClickListener() {
-											public void onClick(View v) {
-												layer.bitmap = bitmap;
-												openedDialog.cancel();
-											}
-										});
+						context.runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								final ImageView image = new ImageView(context);
+								image.setImageBitmap(thumbnail);
+
+								image.setOnClickListener(new OnClickListener() {
+									public void onClick(View v) {
+										layer.bitmap = bitmap;
+										openedDialog.cancel();
+									}
+								});
 
 
-									grid.addView(image);
-								}
-							});
-							
+								grid.addView(image);
+							}
+						});
 						
 					} catch (Exception e) {
 						System.out.println(e);

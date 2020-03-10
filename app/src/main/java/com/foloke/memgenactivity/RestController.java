@@ -92,9 +92,9 @@ public class RestController
 	
 	public void memePosted(boolean posted) {
 		if(posted) {
-			Toast.makeText(context, "posted successfully", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "posted successfully", Toast.LENGTH_LONG).show();
 		} else {
-			Toast.makeText(context, "no response", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "no response", Toast.LENGTH_LONG).show();
 		}	
 		memeSending = false;
 	}
@@ -112,9 +112,9 @@ public class RestController
 
 	public void templatePosted(boolean posted) {
 		if(posted) {
-			Toast.makeText(context, "posted successfully", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "posted successfully", Toast.LENGTH_LONG).show();
 		} else {
-			Toast.makeText(context, "no response", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "no response", Toast.LENGTH_LONG).show();
 		}	
 		templateSending = false;
 	}
