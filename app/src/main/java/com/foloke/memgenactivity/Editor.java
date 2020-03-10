@@ -195,29 +195,6 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
 
 	};
 	
-	public Bitmap toBitmap(Canvas canvas)
-	{
-		Bitmap toDisk = null;
-		try {
-			
-			toDisk = Bitmap.createBitmap((int)canvasRegion.width(),(int)canvasRegion.height(),Bitmap.Config.ARGB_8888);
-			canvas.setBitmap(toDisk);
-			canvas.drawRect(canvasRegion, canvasColor);
-
-			Iterator<Layer> iterator = layers.iterator();
-			while(iterator.hasNext()) {
-				Layer layer = iterator.next();
-				layer.render(canvas);
-			}
-			File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-			toDisk.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(new File(dir, "meme.jpg")));
-			canvas.setBitmap(null);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return toDisk;
-	}
-
     private ScaleGestureDetector gestureDetector = new ScaleGestureDetector(getContext(), gestureListener);
 	
 	boolean pressed;
@@ -241,7 +218,7 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
 							camera.y += event.getY() - pressPoint.y;
 						} else {
 							selectedLayer.x += (event.getX() - pressPoint.x) / (selectedLayer.scale + camera.zoom);
-							selectedLayer.y += (event.getY() - pressPoint.y) / (selectedLayer.scale + camera.zoom);;
+							selectedLayer.y += (event.getY() - pressPoint.y) / (selectedLayer.scale + camera.zoom);
 						}
 					} else {
 						pressed = true;
@@ -252,7 +229,6 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
 					pressed = false;
 					break;
 			}
-			
 		}
 		
 		pressPoint.set(event.getX(), event.getY());
@@ -286,19 +262,38 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
 			canvas.restore();
 			
 		}
-		
-		
-		
 	}
 
 	public void save() {
+		try {
+		Bitmap toDisk = getBitmap();
+		File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+		toDisk.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(new File(dir, "meme.jpg")));
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	public Bitmap getBitmap() {
+		Bitmap bitmap = null;
 		try {
 
 			thread.running = false;
 			thread.join();
 			Canvas c = getHolder().lockCanvas();
 			synchronized(getHolder()) {
-				toBitmap(c);
+				
+				bitmap = Bitmap.createBitmap((int)canvasRegion.width(),(int)canvasRegion.height(),Bitmap.Config.ARGB_8888);
+				c.setBitmap(bitmap);
+				c.drawRect(canvasRegion, canvasColor);
+
+				Iterator<Layer> iterator = layers.iterator();
+				while(iterator.hasNext()) {
+					Layer layer = iterator.next();
+					layer.render(c);
+				}
+				c.setBitmap(null);
+				
 				getHolder().unlockCanvasAndPost(c);
 			}
 			thread.running = true;
@@ -306,6 +301,7 @@ public class Editor extends SurfaceView implements SurfaceHolder.Callback
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		return bitmap;
 	}
 
 	public void resume() {

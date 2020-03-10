@@ -66,7 +66,11 @@
 			android:layout_height="40dp"
 			android:id="@+id/editorChangeImageButton"
 			android:text="i"/>
-		
+		<Button
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			android:id="@+id/editorUploadImageButton"
+			android:text="u"/>
 
 	</LinearLayout>
 </FrameLayout>

@@ -1,6 +1,6 @@
 package com.foloke.memgenactivity.Requests;
 
-import android.os.AsyncTask;;
+import android.os.AsyncTask;
 import com.foloke.memgenactivity.Entities.Meme;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import java.util.ArrayList;
