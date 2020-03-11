@@ -1,11 +1,26 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:focusable="true" 
+    android:focusableInTouchMode="true">
+
+	<EditText
+		android:background="#ffffff"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="0"
+		android:text="sfw, "
+		android:hint="tags"
+		android:id="@+id/uploadTagsEditText"
+		android:clickable="true"
+		android:focusedByDefault="false"
+		android:textSize="50px"/>
 	<ScrollView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:orientation="vertical">
+		android:orientation="vertical"
+		android:layout_weight="1">
     <GridLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
@@ -13,4 +28,4 @@
 		
 	</GridLayout>
 	</ScrollView>
-</FrameLayout>
+</LinearLayout>

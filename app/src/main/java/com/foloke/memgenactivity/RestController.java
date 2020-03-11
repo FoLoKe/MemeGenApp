@@ -48,11 +48,11 @@ public class RestController
 		ratingUpdating = false;
 	}
 	
-	public void getTemplates(int id) {
+	public void getTemplates(int id, String[] tags) {
 		if(!templatesUpdating) {
 			templatesUpdating = true;
 			Toast.makeText(context,"updating",Toast.LENGTH_SHORT).show();
-			String[] params = {"id=" + id};
+			Object[] params = {"id=" + id, tags};
 			new TemplatesRequestTask(this).execute(params);
 			
 		} else {

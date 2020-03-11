@@ -5,18 +5,30 @@
 	android:orientation="vertical"
 	android:focusable="true" 
     android:focusableInTouchMode="true">
-	
+	<LinearLayout 
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="0"
+		android:orientation="horizontal"
+		android:background="#ffffff">
 	<EditText
 		android:background="#ffffff"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_weight="0"
+		android:layout_weight="1"
 		android:text="sfw, "
 		android:hint="tags"
 		android:id="@+id/lentTagsEditText"
 		android:clickable="true"
 		android:focusedByDefault="false"
 		android:textSize="50px"/>
+	<Button
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_weight="0"
+		android:text="Search"
+		android:id="@+id/lentSearchButton"/>
+	</LinearLayout>
 	<ScrollView 
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"

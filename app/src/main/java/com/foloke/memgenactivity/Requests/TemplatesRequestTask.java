@@ -7,7 +7,7 @@ import org.springframework.http.converter.json.*;
 import org.springframework.http.*;
 import com.foloke.memgenactivity.*;
 
-public class TemplatesRequestTask extends AsyncTask<String, Void, Template[]>
+public class TemplatesRequestTask extends AsyncTask<Object, Void, Template[]>
 {
 	RestController restController;
 	
@@ -16,14 +16,14 @@ public class TemplatesRequestTask extends AsyncTask<String, Void, Template[]>
 	}
 
 	@Override
-	protected Template[] doInBackground(String params[])
+	protected Template[] doInBackground(Object params[])
 	{
 		try {
 
 			String last = "";
-			if(params.length > 0) {
-				last = "?" + params[0];
-			}
+			
+			last = "?" + (String)params[0];
+			String[] tags = (String[])params[1];
 
             String url = "http://31.42.45.42:10204/getTemplates"+last;
             MGRestTemplate restTemplate = new MGRestTemplate(1000);
@@ -31,8 +31,9 @@ public class TemplatesRequestTask extends AsyncTask<String, Void, Template[]>
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
             ResponseEntity<Template[]> response = null;
-            
-            response = restTemplate.getForEntity(url, Template[].class);
+			
+            HttpEntity<String[]> request = new HttpEntity<String[]>(tags);
+            response = restTemplate.exchange(url, HttpMethod.GET, request, Template[].class);
             
 			return response.getBody();
         } catch (Exception e) {
@@ -44,7 +45,7 @@ public class TemplatesRequestTask extends AsyncTask<String, Void, Template[]>
 
     @Override
     protected void onPostExecute(Template[] memesInfos) {
-		if(memesInfos != null && memesInfos.length >0) {
+		if(memesInfos != null && memesInfos.length > 0) {
 			restController.updateTemplates(new ArrayList<>(Arrays.asList(memesInfos)));
 		} else {
 			restController.updateTemplates(null);

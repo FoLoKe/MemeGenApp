@@ -44,23 +44,53 @@
 			
 			</GridLayout>
 		</ScrollView>
-		
-		<ScrollView
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:orientation="vertical">
-			<GridLayout
+			android:orientation="vertical"
+			android:focusable="true" 
+			android:focusableInTouchMode="true">
+			<LinearLayout 
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="0"
+				android:background="#ffffff"
+				android:orientation="horizontal">
+				<EditText
+					android:background="#ffffff"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="sfw, "
+					android:hint="tags"
+					android:id="@+id/uploadTagsEditText"
+					android:clickable="true"
+					android:focusedByDefault="false"
+					android:textSize="50px"/>
+				<Button
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="0"
+					android:text="Search"
+					android:id="@+id/image_dialogSearchButton"/>
+			</LinearLayout>
+			<ScrollView
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:columnCount="3"
-				android:id="@+id/imageDialogInternetGridLayout">
-				<ImageView
-					android:layout_width="40dp"
-					android:layout_height="40dp"
-					android:id="@+id/image_dialogNoImage"/>
-
-			</GridLayout>
-		</ScrollView>
+				android:orientation="vertical"
+				android:layout_weight="1">
+					<GridLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:columnCount="3"
+					android:id="@+id/imageDialogInternetGridLayout">
+					<ImageView
+						android:layout_width="40dp"
+						android:layout_height="40dp"
+						android:id="@+id/image_dialogNoImage"/>
+				</GridLayout>
+			</ScrollView>
+		</LinearLayout>
 	</ViewFlipper>
     <Button
 		android:layout_width="match_parent"

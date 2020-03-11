@@ -35,7 +35,13 @@ public class UIController
 		final View lentInclude = context.findViewById(R.id.mainLentInclude);
 		final ScrollView scroll = lentInclude.findViewById(R.id.mainScrollView);
 		final LinearLayout lent = lentInclude.findViewById(R.id.lentContentList);
+		Button searchButton = lentInclude.findViewById(R.id.lentSearchButton);
 		
+		searchButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				context.refreshMemes(-1);
+			}
+		});
 
 		scroll.setOnTouchListener(new OnTouchListener() {
 			PointF start = new PointF();
@@ -53,17 +59,6 @@ public class UIController
 							break;
 						case MotionEvent.ACTION_MOVE:
 							offset = (int) (m.getY() - start.y);
-
-							if (topDiff == 0 || bottomDiff <= 0) {
-								int updateIconOffset = offset;
-								if (updateIconOffset < 0) {
-									updateIconOffset = -updateIconOffset;
-								}
-
-								updateIconOffset = Integer.min(250, updateIconOffset);
-								//updateIcon.setY(updateIconOffset);
-							}
-
 							break;
 						case MotionEvent.ACTION_UP:
 							if (offset < 0 && bottomDiff <= 0) {
@@ -116,64 +111,76 @@ public class UIController
 			public void onClick(View v) {
 				
 				View uploadLayout = context.findViewById(R.id.mainUploadInclude);
-				GridLayout grid = uploadLayout.findViewById(R.id.uploadGridLayout);
+				final GridLayout grid = uploadLayout.findViewById(R.id.uploadGridLayout);
 				grid.setColumnCount(3);
 				grid.removeAllViews();
 				
 				viewFlipper.setDisplayedChild(2);
-				String[] projection = new String[]{
-					MediaStore.Images.Media._ID
-				};
+				
+				new AsyncTask<Void,Void,Void>() {
+					public Void doInBackground(Void... params) {
+						String[] projection = new String[]{
+							MediaStore.Images.Media._ID
+						};
 
-				Cursor cursor = context.getApplicationContext().getContentResolver().query(
-					MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-					projection,
-					null,
-					null,
-					null
-				);
+						Cursor cursor = context.getApplicationContext().getContentResolver().query(
+							MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+							projection, null, null, null
+						);
 
-				while (cursor.moveToNext()) {
-					int idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
-					long id = cursor.getLong(idColumn);
-					Uri contentUri = ContentUris.withAppendedId(
-						MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
+						while (cursor.moveToNext()) {
+							int idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
+							long id = cursor.getLong(idColumn);
+							Uri contentUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
 
-					final Bitmap bitmap;
-					try {
-						bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), contentUri);
-						Bitmap thumbnail = MediaStore.Images.Thumbnails.getThumbnail(
-								context.getContentResolver(), id,
-								MediaStore.Images.Thumbnails.MINI_KIND, null);
-						ImageView image = new ImageView(context);
-						image.setImageBitmap(thumbnail);
-						image.setOnClickListener(new OnClickListener() {
-							public void onClick(View v) {
+							final Bitmap bitmap;
+							try {
+								bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), contentUri);
+								final Bitmap thumbnail = MediaStore.Images.Thumbnails.getThumbnail(context.getContentResolver(), 
+								id, MediaStore.Images.Thumbnails.MINI_KIND, null);
+							
+								context.runOnUiThread(new Runnable() {
+									public void run() {
+										View templateLayout = LayoutInflater.from(context).inflate(R.layout.template_image, null);
+										ImageView image = templateLayout.findViewById(R.id.templateImageImageView);
+										image.setImageBitmap(thumbnail);
+										image.setOnClickListener(new OnClickListener() {
+											public void onClick(View v) {
+												openedDialog = new Dialog(context);
+												openedDialog.setContentView(R.layout.upload_dialog);
+												
+												ImageView imageView = openedDialog.findViewById(R.id.upload_dialogImageView);
+												imageView.setImageBitmap(bitmap);
 
-								final Dialog dialog = new Dialog(context);
-								dialog.setContentView(R.layout.upload_dialog);
-								ImageView imageView = dialog.findViewById(R.id.upload_dialogImageView);
-								imageView.setImageBitmap(bitmap);
-
-								dialog.findViewById(R.id.upload_dialogOkButton).setOnClickListener(new OnClickListener() {
-									public void onClick(View v) {
-										EditText editText = dialog.findViewById(R.id.upload_dialogTagsEditText);
-										String[] tags = editText.getText().toString().split(", ");
-										context.postTemplate(bitmap, tags);
-										dialog.cancel();
+												openedDialog.findViewById(R.id.upload_dialogOkButton).setOnClickListener(new OnClickListener() {
+													public void onClick(View v) {
+														EditText editText = openedDialog.findViewById(R.id.upload_dialogTagsEditText);
+														String[] tags = editText.getText().toString().split(", ");
+														context.postTemplate(bitmap, tags);
+														openedDialog.cancel();
+													}
+												});
+												
+												openedDialog.show();
+												WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+												lp.copyFrom(openedDialog.getWindow().getAttributes());
+												lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+												lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+												openedDialog.getWindow().setAttributes(lp);
+											}
+										});
+										
+										grid.addView(templateLayout);
 									}
 								});
-
-								dialog.show();
+							} catch (IOException e) {
+								e.printStackTrace();
 							}
-						});
-
-						grid.addView(image);
-					} catch (IOException e) {
-						e.printStackTrace();
+						}
+						
+						return null;
 					}
-
-				}
+				}.execute();
 			}
 		});
 
@@ -213,6 +220,11 @@ public class UIController
 					});
 					
 					dialog.show();
+					WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+					lp.copyFrom(dialog.getWindow().getAttributes());
+					lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+					lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+					dialog.getWindow().setAttributes(lp);
 				}
 			});
 			
@@ -250,6 +262,11 @@ public class UIController
 						}
 					});
 					dialog.show();
+					WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+					lp.copyFrom(dialog.getWindow().getAttributes());
+					lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+					lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+					dialog.getWindow().setAttributes(lp);
 				}
 			}
 		});
@@ -265,6 +282,7 @@ public class UIController
 					RadioGroup radioGroup = openedDialog.findViewById(R.id.imageDialogRadioGroup);
 					RadioButton radioButtonLocal = radioGroup.findViewById(R.id.imageDialogRadioButtonLocal);
 					RadioButton radioButtonInternet = radioGroup.findViewById(R.id.imageDialogRadioButtonInternet);
+					Button searchButton = openedDialog.findViewById(R.id.image_dialogSearchButton);
 
 					radioButtonLocal.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
@@ -287,6 +305,12 @@ public class UIController
 					okButton.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
 							openedDialog.cancel();
+						}
+					});
+					
+					searchButton.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							initInternet();
 						}
 					});
 					openedDialog.show();
@@ -367,19 +391,33 @@ public class UIController
 	}
 	
 	public void putTemplates(List<Template> templates) {
-		GridLayout intrenetGrid = openedDialog.findViewById(R.id.imageDialogInternetGridLayout);
+		
 		for(Template template : templates) {
-			ImageView image = new ImageView(context);
-			final Bitmap bitmap = BitmapFactory.decodeByteArray(template.getImage(), 0, template.getImage().length);
-			image.setImageBitmap(bitmap);
-			intrenetGrid.addView(image);
 			
-			image.setOnClickListener(new OnClickListener() {
-				public void onClick(View v) {
-					Editor.Layer layer = editor.selectedLayer;
-					layer.bitmap = bitmap;
-				}
-			});
+			final Bitmap bitmap = BitmapFactory.decodeByteArray(template.getImage(), 0, template.getImage().length);
+			
+			
+			context.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						GridLayout intrenetGrid = openedDialog.findViewById(R.id.imageDialogInternetGridLayout);
+						View templateLayout = LayoutInflater.from(context).inflate(R.layout.template_image, null);
+						final ImageView image = templateLayout.findViewById(R.id.templateImageImageView);
+						image.setImageBitmap(bitmap);
+
+						image.setOnClickListener(new OnClickListener() {
+								public void onClick(View v) {
+									Editor.Layer layer = editor.selectedLayer;
+									layer.bitmap = bitmap;
+								}
+							});
+
+
+						intrenetGrid.addView(templateLayout);
+					}
+				});
+			
+			
 		}
 	}
 	
@@ -432,7 +470,8 @@ public class UIController
 						context.runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-								final ImageView image = new ImageView(context);
+								View templateLayout = LayoutInflater.from(context).inflate(R.layout.template_image, null);
+								final ImageView image = templateLayout.findViewById(R.id.templateImageImageView);
 								image.setImageBitmap(thumbnail);
 
 								image.setOnClickListener(new OnClickListener() {
@@ -443,7 +482,7 @@ public class UIController
 								});
 
 
-								grid.addView(image);
+								grid.addView(templateLayout);
 							}
 						});
 						
@@ -471,6 +510,11 @@ public class UIController
 	public String[] getTags() {
 		View lentInclude = context.findViewById(R.id.mainLentInclude);
 		EditText editText = lentInclude.findViewById(R.id.lentTagsEditText);
+		return editText.getText().toString().split(", ");
+	}
+	
+	public String[] getTemplateTags() {
+		EditText editText = openedDialog.findViewById(R.id.uploadTagsEditText);
 		return editText.getText().toString().split(", ");
 	}
 }

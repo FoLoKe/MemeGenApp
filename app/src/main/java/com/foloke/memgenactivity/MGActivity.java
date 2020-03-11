@@ -105,10 +105,11 @@ public class MGActivity extends Activity {
 	}
 	
 	public void getTemplates(int id) {
+		String[] tags = uiController.getTemplateTags();
 		if(id == -1) {
 			uiController.clearInternetTemplates();
 		}
-		restController.getTemplates(id);
+		restController.getTemplates(id, tags);
 	}
 	
 	public void putTemplates(List<Template> templates) {
