@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:id="@+id/mainLayout">
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight = "0"
+		android:orientation="vertical"
+		android:background="#000000">
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="160px"
+			android:id="@+id/mainUpperLayout"
+			android:layout_weight="0"
+			android:orientation="horizontal">
+		<ImageView
+			android:layout_width="156px"
+			android:layout_height="156px"
+			android:layout_margin="2px"
+			android:src="@drawable/no_image"
+			android:id="@+id/mainLoginImageView"/>
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="debug"
+			android:layout_weight="1"
+			android:textColor="#ffffff"
+			android:clickable="true"
+			android:textSize="100px"
+			android:id="@+id/mainNicknameTextView"/>
+		<Switch
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="0"
+			android:showText="true"
+			android:textOn="all"
+			android:textOff="good"
+			android:id="@+id/mainSwitch"/>
+		</LinearLayout>
+		
+			
+	</LinearLayout>
+	
+	<ViewFlipper
+		android:layout_width="match_parent"
+		android:layout_height="fill_parent"
+		android:layout_weight = "1"
+		android:id="@+id/mainViewFlipper">
+	
+		<include layout = "@layout/lent"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:id="@+id/mainLentInclude"/>
+		
+		<include layout = "@layout/editor"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:id="@+id/mainEditorInclude"/>
+		
+		<include layout = "@layout/upload"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:id="@+id/mainUploadInclude"/>
+	</ViewFlipper>
+	
+	<include 
+		layout="@layout/menu"
+		android:id="@+id/mainMenu"
+		android:layout_weight = "0"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom"/>
+
+</LinearLayout>

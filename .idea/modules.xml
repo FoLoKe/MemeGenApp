@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MemGenActivity.iml" filepath="$PROJECT_DIR$/MemGenActivity.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MemGenActivity.iml" filepath="$PROJECT_DIR$/MemGenActivity.iml" group="MemGenActivity" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="MemGenActivity/app" />
     </modules>
   </component>
 </project>

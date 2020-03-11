@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.foloke.memgenactivity.Content
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:id="@+id/contentLinearLayout">
+
+	<TextView
+		android:id="@+id/contentNickname"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:fontFamily="casual"
+		android:text="debug nickname" />
+
+	<FrameLayout
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent">
+
+		<ImageView
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:id="@+id/contentImage"
+			android:src="@drawable/no_image"
+			android:adjustViewBounds="true"/>
+
+	</FrameLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+
+			<Button
+				android:id="@+id/contentUpButton"
+				android:layout_width="40dp"
+				android:layout_height="40dp" />
+
+			<TextView
+				android:id="@+id/contentUpRating"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:fontFamily="casual"
+				android:paddingLeft="10dp"
+				android:text="0"
+				android:textColor="#00ff00"
+				android:textSize="24sp" />
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:gravity="right">
+
+			<TextView
+				android:id="@+id/contentDownRating"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:fontFamily="casual"
+				android:paddingRight="10dp"
+				android:text="0"
+				android:textColor="#ff0000"
+				android:textSize="24sp" />
+
+			<Button
+				android:id="@+id/contentDownButton"
+				android:layout_width="40dp"
+				android:layout_height="40dp"
+				android:adjustViewBounds="false" />
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+</com.foloke.memgenactivity.Content>
+
