@@ -10,7 +10,7 @@ import com.foloke.memgenactivity.Entities.MemeInfo;
 
 import org.springframework.http.*;
 
-public class MemesRequestTask extends AsyncTask<String, Void, MemeInfo[]> {
+public class MemesRequestTask extends AsyncTask<Object, Void, MemeInfo[]> {
 
     private RestController restController;
 
@@ -19,13 +19,13 @@ public class MemesRequestTask extends AsyncTask<String, Void, MemeInfo[]> {
 	}
 	
     @Override
-    protected MemeInfo[] doInBackground(String... params) {
+    protected MemeInfo[] doInBackground(Object... params) {
         try {
 			
 			String last = "";
-			if(params.length > 0) {
-				last = "?" + params[0];
-			}
+
+			last = "?" + (String)params[0];
+			String[] tags = (String[])params[1];
 			
             String url = "http://31.42.45.42:10204/get"+last;
             MGRestTemplate restTemplate = new MGRestTemplate(1000);
@@ -34,9 +34,10 @@ public class MemesRequestTask extends AsyncTask<String, Void, MemeInfo[]> {
 
             ResponseEntity<MemeInfo[]> response = null;
             if(MGActivity.password == null) {
-                response = restTemplate.getForEntity(url, MemeInfo[].class);
+                HttpEntity<String[]> request = new HttpEntity<String[]>(tags);
+                response = restTemplate.exchange(url, HttpMethod.GET, request, MemeInfo[].class);
             } else {
-                HttpEntity<String> request = new HttpEntity<String>(restTemplate.basicAuthHeader());
+                HttpEntity<String[]> request = new HttpEntity<String[]>(tags, restTemplate.basicAuthHeader());
                 response = restTemplate.exchange(url, HttpMethod.GET, request, MemeInfo[].class);
             }
 			return response.getBody();

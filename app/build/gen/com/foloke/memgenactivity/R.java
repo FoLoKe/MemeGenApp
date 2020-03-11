@@ -49,8 +49,8 @@ public final class R {
         public static final int imageDialogViewFlipper=0x7f080014;
         public static final int image_dialogNoImage=0x7f080016;
         public static final int image_dialogOkButton=0x7f080018;
-        public static final int lentContentList=0x7f08001a;
-        public static final int lentUpdateIcon=0x7f08001b;
+        public static final int lentContentList=0x7f08001b;
+        public static final int lentTagsEditText=0x7f080019;
         public static final int login_dialogLoginEditText=0x7f08001c;
         public static final int login_dialogOkButton=0x7f08001e;
         public static final int login_dialogPasswordEditText=0x7f08001d;
@@ -60,7 +60,7 @@ public final class R {
         public static final int mainLoginImageView=0x7f080021;
         public static final int mainMenu=0x7f080028;
         public static final int mainNicknameTextView=0x7f080022;
-        public static final int mainScrollView=0x7f080019;
+        public static final int mainScrollView=0x7f08001a;
         public static final int mainSwitch=0x7f080023;
         public static final int mainUploadInclude=0x7f080027;
         public static final int mainUpperLayout=0x7f080020;

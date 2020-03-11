@@ -18,11 +18,12 @@ public class RestController
 		this.context = context;
 	}
 	
-	public void getMemes(int last) {
+	public void getMemes(int last, String[] tags) {
 		if(!memesUpdating) {
 			memesUpdating = true;
 			Toast.makeText(context,"updating",Toast.LENGTH_SHORT).show();
-			String[] params = {"last=" + last};
+			Object[] params = {"last=" + last + "&type=" + MGActivity.goodContent, tags};
+			
 			new MemesRequestTask(this).execute(params);
 		} else {
 			Toast.makeText(context, "wait", Toast.LENGTH_SHORT).show();

@@ -13,24 +13,29 @@ import android.app.*;
 import java.io.IOException;
 import java.util.*;
 import android.os.*;
+import android.widget.RadioGroup.*;
 
 public class UIController
 {
 	private static MGActivity context;
 	private Dialog openedDialog;
 	private Editor editor;
-	//TODO: separate loading and ui;
-	//TODO: sending dialogs;
 	
 	public UIController(MGActivity parent) {
 		context = parent;
 		context.setContentView(R.layout.main);
 
-		View lentInclude = context.findViewById(R.id.mainLentInclude);
+		Switch switchView = context.findViewById(R.id.mainSwitch);
+		switchView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    MGActivity.goodContent = !isChecked;
+                }
+			});
+		
+		final View lentInclude = context.findViewById(R.id.mainLentInclude);
 		final ScrollView scroll = lentInclude.findViewById(R.id.mainScrollView);
 		final LinearLayout lent = lentInclude.findViewById(R.id.lentContentList);
-		final View updateIcon = lentInclude.findViewById(R.id.lentUpdateIcon);
-		updateIcon.setY(-updateIcon.getHeight());
+		
 
 		scroll.setOnTouchListener(new OnTouchListener() {
 			PointF start = new PointF();
@@ -56,12 +61,11 @@ public class UIController
 								}
 
 								updateIconOffset = Integer.min(250, updateIconOffset);
-								updateIcon.setY(updateIconOffset);
+								//updateIcon.setY(updateIconOffset);
 							}
 
 							break;
 						case MotionEvent.ACTION_UP:
-
 							if (offset < 0 && bottomDiff <= 0) {
 								if (lent.getChildCount() > 0) {
 									Content lastContent = (Content) lent.getChildAt(lent.getChildCount() - 1);
@@ -464,15 +468,9 @@ public class UIController
 		intrenetGrid.removeAllViews();
 	}
 	
-	public void updatig() {
+	public String[] getTags() {
 		View lentInclude = context.findViewById(R.id.mainLentInclude);
-		View updateIcon = lentInclude.findViewById(R.id.lentUpdateIcon);
-		updateIcon.setVisibility(View.VISIBLE);
-	}
-	
-	public void updatingEnded() {
-		View lentInclude = context.findViewById(R.id.mainLentInclude);
-		View updateIcon = lentInclude.findViewById(R.id.lentUpdateIcon);
-		updateIcon.setVisibility(View.GONE);
+		EditText editText = lentInclude.findViewById(R.id.lentTagsEditText);
+		return editText.getText().toString().split(", ");
 	}
 }

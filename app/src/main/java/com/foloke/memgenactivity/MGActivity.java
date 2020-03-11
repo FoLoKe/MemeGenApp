@@ -20,6 +20,7 @@ public class MGActivity extends Activity {
 	public UIController uiController;
 	public static String password = "password";
 	public static String login = "login";
+	public static boolean goodContent = true;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +60,11 @@ public class MGActivity extends Activity {
 	} 
 	
 	public void refreshMemes(int id) {
+		String[] tags = uiController.getTags();
 		if(id == -1) {
 			uiController.clearContent();
 		}
-		restController.getMemes(id);
+		restController.getMemes(id, tags);
 	}
 	
 	public void postMeme(Bitmap bitmap, String[] tags) {

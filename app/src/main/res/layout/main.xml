@@ -41,16 +41,8 @@
 			android:textOff="good"
 			android:id="@+id/mainSwitch"/>
 		</LinearLayout>
-		<EditText
-			android:background="#ffffff"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="sfw, "
-			android:hint="tags"
-			android:clickable="true"
-			android:textSize="50px"/>
-			
 		
+			
 	</LinearLayout>
 	
 	<ViewFlipper
