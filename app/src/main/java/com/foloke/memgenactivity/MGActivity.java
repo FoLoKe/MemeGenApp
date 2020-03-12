@@ -123,4 +123,12 @@ public class MGActivity extends Activity {
 	public void putRating(MemeInfo memeInfo) {
 		uiController.putRating(memeInfo);
 	}
+	
+	public void getTags(String tag) {
+		restController.getTags(tag);
+	}
+	
+	public void putTags(Tag[] tags) {
+		uiController.putTags(tags);
+	}
 }

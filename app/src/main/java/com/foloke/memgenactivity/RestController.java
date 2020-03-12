@@ -119,4 +119,22 @@ public class RestController
 		}	
 		templateSending = false;
 	}
+	
+	public void getTags(String tag) {
+		new TagsRequestTask(this).execute("tag=" + tag);
+	}
+	
+	public void putTags(Tag[] tags){
+		if(tags != null) {
+			if (tags.length == 0) {
+				Toast.makeText(context, "no results", Toast.LENGTH_LONG).show();
+			} else {
+				context.putTags(tags);
+			}
+		} else {
+			Toast.makeText(context, "no response", Toast.LENGTH_LONG).show();
+		}
+		
+		
+	}
 }

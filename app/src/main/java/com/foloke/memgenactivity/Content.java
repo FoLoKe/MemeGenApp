@@ -34,6 +34,27 @@ public class Content extends LinearLayout
 		if(meme.getUser() != null) {
 			nickName.setText(meme.getUser().getName());
 		}
+		ViewGroup tagsContainer = this.findViewById(R.id.contentTagsContainer);
+		for(final Tag tag : meme.getTags()) {
+			View tagView = LayoutInflater.from(getContext()).inflate(R.layout.tag, null);
+			TextView text = tagView.findViewById(R.id.tagTextView);
+			text.setText(tag.getName());
+			tagsContainer.addView(tagView);
+
+			tagView.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						View lentInclude = ((MGActivity)v.getContext()).findViewById(R.id.mainLentInclude);
+						EditText tagsEditText = lentInclude.findViewById(R.id.lentTagsEditText);
+						String editTextTags = tagsEditText.getText().toString();
+						StringBuilder sb = new StringBuilder();
+						sb.append(editTextTags);
+						sb.append(tag.getName());
+
+						tagsEditText.setText(sb.toString());
+					}
+				});
+
+		}
 	}
 	
 	private class LikeButtonListener implements View.OnClickListener {

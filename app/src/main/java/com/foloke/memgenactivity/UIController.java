@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.util.*;
 import android.os.*;
 import android.widget.RadioGroup.*;
+import android.widget.TextView.*;
+import android.text.*;
 
 public class UIController
 {
@@ -36,7 +38,23 @@ public class UIController
 		final ScrollView scroll = lentInclude.findViewById(R.id.mainScrollView);
 		final LinearLayout lent = lentInclude.findViewById(R.id.lentContentList);
 		Button searchButton = lentInclude.findViewById(R.id.lentSearchButton);
-		
+		EditText lentTagsEditText = lentInclude.findViewById(R.id.lentTagsEditText);
+		lentTagsEditText.addTextChangedListener(new TextWatcher(){
+				public void afterTextChanged(Editable s) {}
+
+				public void beforeTextChanged(CharSequence s, int start,
+											  int count, int after) {
+				}
+
+				public void onTextChanged(CharSequence s, int start,
+										  int before, int count) {
+					String string = s.toString();
+					String[] tags = string.split(", ");
+					if(tags.length > 0 && !tags[tags.length - 1].equals("")) {
+						context.getTags(tags[tags.length - 1]);
+					}
+				}
+		});
 		searchButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				context.refreshMemes(-1);
@@ -516,5 +534,39 @@ public class UIController
 	public String[] getTemplateTags() {
 		EditText editText = openedDialog.findViewById(R.id.uploadTagsEditText);
 		return editText.getText().toString().split(", ");
+	}
+	
+	public void putTags(final Tag[] tags) {
+		context.runOnUiThread(new Runnable() {
+			public void run() {
+				final View lentInclude = context.findViewById(R.id.mainLentInclude);
+				ViewGroup tagsContainer = lentInclude.findViewById(R.id.lentTagsContainer);
+				tagsContainer.removeAllViewsInLayout();
+				for(final Tag tag : tags) {
+					View tagView = LayoutInflater.from(context).inflate(R.layout.tag, null);
+					TextView text = tagView.findViewById(R.id.tagTextView);
+					text.setText(tag.getName());
+					tagsContainer.addView(tagView);
+					
+					tagView.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							EditText tagsEditText = lentInclude.findViewById(R.id.lentTagsEditText);
+							String[] editTextTags = tagsEditText.getText().toString().split(", ");
+							StringBuilder sb = new StringBuilder();
+							sb.append(editTextTags[0]);
+							for(int i = 1; i < editTextTags.length - 1; i++) {
+								sb.append(", ");
+								sb.append(editTextTags[i]);
+							}
+							sb.append(", ");
+							sb.append(tag.getName());
+							
+							tagsEditText.setText(sb.toString());
+						}
+					});
+					
+				}
+			}
+		});
 	}
 }

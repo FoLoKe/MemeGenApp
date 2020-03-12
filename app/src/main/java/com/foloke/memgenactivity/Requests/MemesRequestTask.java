@@ -50,10 +50,14 @@ public class MemesRequestTask extends AsyncTask<Object, Void, MemeInfo[]> {
 
     @Override
     protected void onPostExecute(MemeInfo[] memesInfos) {
-		if(memesInfos != null && memesInfos.length >0) {
-			restController.updateMemes(new ArrayList<>(Arrays.asList(memesInfos)));
+		if(memesInfos != null){
+			if(memesInfos.length >0) {
+				restController.updateMemes(new ArrayList<>(Arrays.asList(memesInfos)));
+			} else {
+				restController.updateMemes(new ArrayList<MemeInfo>());
+			}
 		} else {
-			restController.updateMemes(new ArrayList<MemeInfo>());
+			restController.updateMemes(null);
 		}
 		
     }
