@@ -27,7 +27,7 @@ public class MemesRequestTask extends AsyncTask<Object, Void, MemeInfo[]> {
 			last = "?" + (String)params[0];
 			String[] tags = (String[])params[1];
 			
-            String url = "http://31.42.45.42:10204/get"+last;
+            String url = "http://31.42.45.42:10204/getMemes"+last;
             MGRestTemplate restTemplate = new MGRestTemplate(1000);
 			
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
@@ -35,11 +35,12 @@ public class MemesRequestTask extends AsyncTask<Object, Void, MemeInfo[]> {
             ResponseEntity<MemeInfo[]> response = null;
             if(MGActivity.password == null) {
                 HttpEntity<String[]> request = new HttpEntity<String[]>(tags);
-                response = restTemplate.exchange(url, HttpMethod.GET, request, MemeInfo[].class);
+                response = restTemplate.exchange(url, HttpMethod.POST, request, MemeInfo[].class);
             } else {
                 HttpEntity<String[]> request = new HttpEntity<String[]>(tags, restTemplate.basicAuthHeader());
-                response = restTemplate.exchange(url, HttpMethod.GET, request, MemeInfo[].class);
+                response = restTemplate.exchange(url, HttpMethod.POST, request, MemeInfo[].class);
             }
+            System.out.println("  GET request for \"" + url);
 			return response.getBody();
         } catch (Exception e) {
             System.out.println(e);

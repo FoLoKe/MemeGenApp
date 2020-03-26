@@ -10,15 +10,14 @@
 		android:id="@+id/contentNickname"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:fontFamily="casual"
-		android:text="debug nickname" />
+		android:fontFamily="casual" />
 
-	<ListView
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
 		android:id="@+id/contentTagsContainer">
-	</ListView>
+	</LinearLayout>
 	<FrameLayout
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent">

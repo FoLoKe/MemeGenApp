@@ -1,5 +1,7 @@
 package com.foloke.memgenactivity;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -22,7 +24,8 @@ public class MGActivity extends Activity {
 	public static String login = "login";
 	public static boolean goodContent = true;
 	
-    @Override
+    @TargetApi(Build.VERSION_CODES.M)
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 		try {
@@ -38,7 +41,7 @@ public class MGActivity extends Activity {
 			refreshMemes(-1);
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println(e.toString());
 		}
     }
 	

@@ -25,7 +25,7 @@ public class TagsRequestTask extends AsyncTask<String, Void, Tag[]>
 
 			ResponseEntity<Tag[]> response = null;
 			
-			response = restTemplate.getForEntity(url, MemeInfo[].class);
+			response = restTemplate.getForEntity(url, Tag[].class);
 		
 			return response.getBody();
 		} catch (Exception e) {

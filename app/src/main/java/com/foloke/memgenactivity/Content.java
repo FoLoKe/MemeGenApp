@@ -35,6 +35,7 @@ public class Content extends LinearLayout
 			nickName.setText(meme.getUser().getName());
 		}
 		ViewGroup tagsContainer = this.findViewById(R.id.contentTagsContainer);
+
 		for(final Tag tag : meme.getTags()) {
 			View tagView = LayoutInflater.from(getContext()).inflate(R.layout.tag, null);
 			TextView text = tagView.findViewById(R.id.tagTextView);

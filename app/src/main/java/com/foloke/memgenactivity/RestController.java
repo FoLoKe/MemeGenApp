@@ -128,13 +128,10 @@ public class RestController
 		if(tags != null) {
 			if (tags.length == 0) {
 				Toast.makeText(context, "no results", Toast.LENGTH_LONG).show();
-			} else {
-				context.putTags(tags);
 			}
 		} else {
 			Toast.makeText(context, "no response", Toast.LENGTH_LONG).show();
 		}
-		
-		
+		context.putTags(tags);
 	}
 }

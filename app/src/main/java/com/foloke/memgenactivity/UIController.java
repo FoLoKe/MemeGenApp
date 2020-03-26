@@ -13,13 +13,11 @@ import android.app.*;
 import java.io.IOException;
 import java.util.*;
 import android.os.*;
-import android.widget.RadioGroup.*;
-import android.widget.TextView.*;
 import android.text.*;
 
 public class UIController
 {
-	private static MGActivity context;
+	public static MGActivity context;
 	private Dialog openedDialog;
 	private Editor editor;
 	
@@ -542,29 +540,31 @@ public class UIController
 				final View lentInclude = context.findViewById(R.id.mainLentInclude);
 				ViewGroup tagsContainer = lentInclude.findViewById(R.id.lentTagsContainer);
 				tagsContainer.removeAllViewsInLayout();
-				for(final Tag tag : tags) {
-					View tagView = LayoutInflater.from(context).inflate(R.layout.tag, null);
-					TextView text = tagView.findViewById(R.id.tagTextView);
-					text.setText(tag.getName());
-					tagsContainer.addView(tagView);
-					
-					tagView.setOnClickListener(new OnClickListener() {
-						public void onClick(View v) {
-							EditText tagsEditText = lentInclude.findViewById(R.id.lentTagsEditText);
-							String[] editTextTags = tagsEditText.getText().toString().split(", ");
-							StringBuilder sb = new StringBuilder();
-							sb.append(editTextTags[0]);
-							for(int i = 1; i < editTextTags.length - 1; i++) {
+				if (tags != null) {
+					for (final Tag tag : tags) {
+						View tagView = LayoutInflater.from(context).inflate(R.layout.tag, null);
+						TextView text = tagView.findViewById(R.id.tagTextView);
+						text.setText(tag.getName());
+						tagsContainer.addView(tagView);
+
+						tagView.setOnClickListener(new OnClickListener() {
+							public void onClick(View v) {
+								EditText tagsEditText = lentInclude.findViewById(R.id.lentTagsEditText);
+								String[] editTextTags = tagsEditText.getText().toString().split(", ");
+								StringBuilder sb = new StringBuilder();
+								sb.append(editTextTags[0]);
+								for (int i = 1; i < editTextTags.length - 1; i++) {
+									sb.append(", ");
+									sb.append(editTextTags[i]);
+								}
 								sb.append(", ");
-								sb.append(editTextTags[i]);
+								sb.append(tag.getName());
+
+								tagsEditText.setText(sb.toString());
 							}
-							sb.append(", ");
-							sb.append(tag.getName());
-							
-							tagsEditText.setText(sb.toString());
-						}
-					});
-					
+						});
+
+					}
 				}
 			}
 		});
